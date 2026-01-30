@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom"
+import "./App.css"
 
 export default function App() {
   return (
@@ -7,27 +8,44 @@ export default function App() {
       <Route
         path="/"
         element={
-          <div>
-            <h1>Home Page</h1>
+          <div className="page">
+            {/* Header */}
+            <header className="navbar">
+              <div className="brand">
+            <h1 className="title">Ask PrysmIO</h1>
+            </div>
+
 
             {/* Button linking to FAQ Page */}
             <Link to="/faq">
-              <button>Go to FAQ</button>
+              <button className="navButton">Go to FAQ</button>
             </Link>
-          </div>
-        }
-      />
+          </header>
 
+        {/* Main Content */}
+        <main className="content">
+            <h2>Welcome to PrysmIO's FAQ!</h2>
+            <p>This is the prysmIo assistant homepage.</p>   
+          </main>
+        </div>
+          }
+        />
+          
       {/* FAQ Page */}
       <Route
         path="/faq"
         element={
-          <div>
-            <h1>FAQ Page</h1>
-
+          <div className="page">
+            <header className="navbar">
+            <h1 className="title">FAQ Page</h1>
             <Link to="/">
-              <button>Back to Home</button>
+              <button className="navButton">Home</button>
             </Link>
+          </header>
+
+          <main className="content">
+            <p>FAQ content will go here.</p>
+            </main>
           </div>
         }
       />
