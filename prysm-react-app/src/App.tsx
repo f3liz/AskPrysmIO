@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom"
+import Chatbot from "./components/Chatbot"
 import "./App.css"
 
 export default function App() {
@@ -20,6 +21,11 @@ export default function App() {
             <Link to="/faq">
               <button className="navButton">Go to FAQ</button>
             </Link>
+
+              <Chatbot />
+          </div>
+        }
+      />
           </header>
 
         {/* Main Content */}
