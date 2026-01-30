@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom"
+import Chatbot from "./components/Chatbot"
 
 export default function App() {
   return (
@@ -14,6 +15,8 @@ export default function App() {
             <Link to="/faq">
               <button>Go to FAQ</button>
             </Link>
+
+              <Chatbot />
           </div>
         }
       />
