@@ -13,25 +13,21 @@ export default function App() {
             {/* Header */}
             <header className="navbar">
               <div className="brand">
-            <h1 className="title">Ask PrysmIO</h1>
+                <h1 className="title">Ask PrysmIO</h1>
             </div>
-
 
             {/* Button linking to FAQ Page */}
             <Link to="/faq">
               <button className="navButton">Go to FAQ</button>
             </Link>
-
-              <Chatbot />
-          </div>
-        }
-      />
           </header>
-
+          
         {/* Main Content */}
         <main className="content">
             <h2>Welcome to PrysmIO's FAQ!</h2>
             <p>This is the prysmIo assistant homepage.</p>   
+          {/* Chatbot Component */}
+            <Chatbot />
           </main>
         </div>
           }
