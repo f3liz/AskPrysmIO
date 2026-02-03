@@ -1,4 +1,5 @@
 import { useState } from "react"
+import ChatBubble from "./ChatBubble";
 import '../styles/chatbot.css'
 
 export default function Chatbot(){
@@ -18,18 +19,18 @@ export default function Chatbot(){
 
 
     return(
-        <>
-            <div>
+        <div className="chat-container">
+            <div className="chat-messages">
                 {chat.map((line) => (
-                    <p>{line}</p>
+                    <ChatBubble content={line} />
                 ))}
             </div>
             <form className="chatbot-input" onSubmit={handleSubmit}>
                 <input className="input-area" placeholder="Type your message..." type="text" value={question} onChange={(e) => setQuestion(e.target.value)}
                 />
-                <button type="submit">Submit</button>
+                <button type="submit"></button>
             </form>
-        </>
+        </div>
 
     )
 }
