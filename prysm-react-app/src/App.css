@@ -3,9 +3,19 @@
   --secondary: #e0f2f1; /* Light mint */
   --accent: #ffffff;
 }
+html, body, #root {
+    margin: 0;
+}
+
+html{
+  background-color: var(--secondary);
+}
 
 /* Page Layout */
 .page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   font-family: Arial, sans-serif;
   min-height: 100vh;
   background-color: var(--secondary);
@@ -19,6 +29,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: -10px;
+  padding: 2rem;
 }
 
 
@@ -42,7 +54,10 @@
 
 /* Main Content */
 .content {
-  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 /* Mobile-first Responsive Text */
