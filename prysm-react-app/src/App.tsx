@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom"
 import Chatbot from "./components/Chatbot"
+import FAQ from "./components/FAQ"
 import "./App.css"
 
 export default function App() {
@@ -46,7 +47,7 @@ export default function App() {
           </header>
 
           <main className="content">
-            <p>FAQ content will go here.</p>
+            <FAQ/>
             </main>
           </div>
         }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import accordionData from '../data/loremIpsum.ts';
 import AccordionItem from "./AccordionItem.tsx";
-
+import "../styles/faq.css"
 
 export default function FAQ() {
     const [isExpanded, setExpandedId] = useState<number | null>(null);
