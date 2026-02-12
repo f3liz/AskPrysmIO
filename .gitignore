@@ -22,4 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-package-lock.json
+
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/.env
+*.pyc
