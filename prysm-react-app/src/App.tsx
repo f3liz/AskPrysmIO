@@ -25,7 +25,6 @@ export default function App() {
         {/* Main Content */}
         <main className="content">
             <h2>Welcome to PrysmIO's FAQ!</h2>
-            <p>This is the prysmIo assistant homepage.</p>   
           {/* Chatbot Component */}
             <Chatbot />
           </main>
