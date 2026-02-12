@@ -1,0 +1,57 @@
+/* FAQ LAYOUT */
+.faq-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.faq-content {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+/* Accordion Card */
+.accordion-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.accordion-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Question Button */
+.accord-title {
+  width: 100%;
+  text-align: left;
+  padding: 18px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #f7f7f7;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.accord-title:hover {
+  background: #ececec;
+}
+
+/* Answer box */
+.accordion-content {
+  padding: 18px 20px;
+  background: white;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+  border-top: 1px solid #eee;
+}
