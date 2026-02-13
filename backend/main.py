@@ -5,5 +5,5 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"message": "Hello, World!"}
+    return {"message": "Backend running"}
 app.include_router(chats.router)
