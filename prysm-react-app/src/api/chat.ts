@@ -9,7 +9,7 @@ export async function sendChatQuestion(question: string): Promise<string> {
         });
 
         if (!response.ok) {
-            throw new Error("Error with backend!")
+            throw new Error(`Error with backend: ${response.status}`)
         }
 
         const data = await response.json();
