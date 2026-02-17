@@ -11,7 +11,7 @@ export default function Chatbot(){
     async function handleSubmit(e: React.SubmitEvent) {
         e.preventDefault()
 
-        if (!question) return
+        if (!question.trim()) return
 
         // mocked chat
         // setChat(prev => [...prev, "You: " + question, "PrysmIO Chatbot: It's best to use your index finger for the scan."])
