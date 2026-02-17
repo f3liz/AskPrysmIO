@@ -24,6 +24,7 @@ export default function Chatbot(){
             setChat(prev => [...prev, "PrysmIO Chatbot: " + answer]);
         } catch(error) {
             setChat(prev => [...prev, "PrysmIO Chatbot: Unable to get answer."]);
+            console.log(error)
         }
 
         setQuestion("")
