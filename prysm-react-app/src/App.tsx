@@ -2,6 +2,7 @@ import { Routes, Route, Link } from "react-router-dom"
 import Chatbot from "./components/Chatbot"
 import FAQ from "./components/FAQ"
 import "./App.css"
+import prysmBg from "./assets/prysmIobg.png"
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
             {/* Header */}
             <header className="navbar">
               <div className="brand">
-                <h1 className="title">Ask PrysmIO</h1>
+                <h1 className="title">NU SKIN</h1>
             </div>
 
             {/* Button linking to FAQ Page */}
@@ -24,15 +25,23 @@ export default function App() {
           </header>
           
         {/* Main Content */}
-        <main className="content">
-            <h2>Welcome to PrysmIO's FAQ!</h2>
-            <p>This is the prysmIo assistant homepage.</p>   
-          {/* Chatbot Component */}
-            <Chatbot />
-          </main>
-        </div>
-          }
-        />
+            <main className="content">
+              <section className="prysm"
+              style={{ backgroundImage: `url(${prysmBg})` }}
+              >
+                <div className="prysmOverlay">
+                  <h1>Ask PrysmIO</h1>
+                  <h2>This is the prysmIo assistant homepage.</h2>
+
+                  <div className="chatWrapper">
+                    <Chatbot />
+                  </div>
+                </div>
+              </section>
+            </main>
+          </div>
+        }
+      />
           
       {/* FAQ Page */}
       <Route
