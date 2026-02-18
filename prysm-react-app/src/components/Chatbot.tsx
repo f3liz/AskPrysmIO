@@ -17,14 +17,14 @@ export default function Chatbot(){
         // mocked chat
         // setChat(prev => [...prev, "You: " + question, "PrysmIO Chatbot: It's best to use your index finger for the scan."])
 
-        setChat(prev => [...prev, "You: " + question]);
+        setChat(prev => [...prev, {content: question, role: "user"}]);
 
         try {
             const answer = await sendChatQuestion(question);
 
-            setChat(prev => [...prev, "PrysmIO Chatbot: " + answer]);
+            setChat(prev => [...prev, {content: answer, role: "assistant"}]);
         } catch(error) {
-            setChat(prev => [...prev, "PrysmIO Chatbot: Unable to get answer."]);
+            setChat(prev => [...prev, {content: "Unable to answer question", role: "assistant"}]);
             console.log(error)
         }
 
