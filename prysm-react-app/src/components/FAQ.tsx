@@ -1,5 +1,5 @@
 import { useState } from "react";
-import accordionData from '../data/loremIpsum.ts';
+import { prysmFaqData } from "../data/prysmFaqData.ts";
 import AccordionItem from "./AccordionItem.tsx";
 import "../styles/faq.css"
 
@@ -13,7 +13,7 @@ export default function FAQ() {
     return(
         <div className="faq-container">
             <div className="faq-content">
-                {accordionData.map((item)=> (
+                {prysmFaqData.map((item)=> (
                     <AccordionItem
                         key={item.id}
                         title={item.title}
