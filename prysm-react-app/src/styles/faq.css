@@ -1,7 +1,15 @@
 /* FAQ LAYOUT */
+.faqPage {
+  background: #050505;
+  min-height: 100vh;
+}
+
+
 .faq-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
   padding: 40px 20px;
 }
 

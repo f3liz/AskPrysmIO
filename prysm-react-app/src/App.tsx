@@ -14,8 +14,10 @@ export default function App() {
           <div className="page">
             {/* Header */}
             <header className="navbar">
-              <div className="brand">
-                <h1 className="title">NU SKIN</h1>
+            <div className="brand">
+                <span className="logoText">
+                  NU SKIN<sup>®</sup>
+                </span>
             </div>
 
             {/* Button linking to FAQ Page */}
@@ -30,8 +32,8 @@ export default function App() {
               style={{ backgroundImage: `url(${prysmBg})` }}
               >
                 <div className="prysmOverlay">
-                  <h1>Ask PrysmIO</h1>
-                  <h2>This is the prysmIo assistant homepage.</h2>
+                  <h1>Ask Prysm iO</h1>
+                  <h2>Your next AI health Assistant.</h2>
 
                   <div className="chatWrapper">
                     <Chatbot />
@@ -47,7 +49,7 @@ export default function App() {
       <Route
         path="/faq"
         element={
-          <div className="page">
+          <div className="faqPage">
             <header className="navbar">
             <h1 className="title">FAQ Page</h1>
             <Link to="/">
