@@ -1,6 +1,11 @@
 export async function sendChatQuestion(question: string): Promise<string> {
     try {
-        const response = await fetch("route", {
+        const route = import.meta.env.VITE_BACKEND_API_ROUTE!
+        if (!route) {
+            throw new Error("Route not found")
+        }
+
+        const response = await fetch(route, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
