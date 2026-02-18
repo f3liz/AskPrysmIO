@@ -1,12 +1,13 @@
 import { useState } from "react"
 import ChatBubble from "./ChatBubble";
+import type { Message } from '../types'
 import '../styles/chatbot.css'
 import { sendChatQuestion } from "../api/chat";
 
 export default function Chatbot(){
 
     const [question, setQuestion] = useState("");
-    const [chat, setChat] = useState<string[]>([])
+    const [chat, setChat] = useState<Message[]>([])
 
     async function handleSubmit(e: React.SubmitEvent) {
         e.preventDefault()
@@ -34,8 +35,8 @@ export default function Chatbot(){
     return(
         <div className="chat-container">
             <div className="chat-messages">
-                {chat.map((line) => (
-                    <ChatBubble content={line} />
+                {chat.map((message, index) => (
+                    <ChatBubble key={index} content={message.content} role={message.role} />
                 ))}
             </div>
             <form className="chatbot-input" onSubmit={handleSubmit}>
