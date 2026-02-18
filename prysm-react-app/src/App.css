@@ -6,7 +6,6 @@
 html, body, #root {
     margin: 0;
     height: 100%;
-    overflow: hidden;
 }
 
 html{
@@ -125,8 +124,10 @@ html{
 .chatWrapper {
   position: fixed;
   bottom: 20px;
-  left: 40px;
-  width: 600px;
+  left: 20px;
+  right: 20px;
+  max-width: 700px;
+  margin: 0 auto;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -142,4 +143,8 @@ html{
 .content p {
   font-size: 16px;
   line-height: 1.5;
+}
+
+.page:not(.faqPage) {
+  overflow: hidden;
 }
