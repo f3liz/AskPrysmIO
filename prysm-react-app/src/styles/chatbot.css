@@ -1,6 +1,6 @@
 .chatbot-input {
     padding: 12px;
-    background: #c6dcdb;
+    background: #bfcbca;
     display: flex;
     border-radius: 35px;
     width: 80%;
@@ -22,7 +22,7 @@
     height: 40px;
     border-radius: 50%;
     border: none;
-    background: #004d40;
+    background: rgb(87, 99, 98);
     color: white;
     font-size: 16px;
 }
@@ -31,28 +31,43 @@
     background: #004d40d0;
 }
 
-.chat-bubble {
-    background-color: #80aaa3;
-    border-radius: 20px;
-    height: 3rem;
-    margin: 5px;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-}
+
 
 .chat-messages{
-    background-color: #ceeae8a0;
     border-radius: 25px;
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 16px;
-    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 100%;
 }
 
 .chat-container{
+    width: 80%;
+    margin: 0 auto;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    flex: 1;
     max-height: calc(100vh - 250px);
+}
+
+.message{
+    max-width: 75%;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.message.user {
+    align-self: flex-end;
+    background: #b0c5c5;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 16px 16px 2px 16px;
+}
+
+.message.bot {
+    color: #111;
+    max-width: 100%;
 }

@@ -1,18 +1,32 @@
 import { useState } from "react"
 import ChatBubble from "./ChatBubble";
+import type { Message } from '../types'
 import '../styles/chatbot.css'
+import { sendChatQuestion } from "../api/chat";
 
 export default function Chatbot(){
 
     const [question, setQuestion] = useState("");
-    const [chat, setChat] = useState<string[]>([])
+    const [chat, setChat] = useState<Message[]>([])
 
-    function handleSubmit(e: React.SubmitEvent) {
+    async function handleSubmit(e: React.SubmitEvent) {
         e.preventDefault()
 
-        if (!question) return
+        if (!question.trim()) return
 
-        setChat(prev => [...prev, "You: " + question, "PrysmIO Chatbot: It's best to use your index finger for the scan."])
+        // mocked chat
+        // setChat(prev => [...prev, "You: " + question, "PrysmIO Chatbot: It's best to use your index finger for the scan."])
+
+        setChat(prev => [...prev, {content: question, role: "user"}]);
+
+        try {
+            const answer = await sendChatQuestion(question);
+
+            setChat(prev => [...prev, {content: answer, role: "assistant"}]);
+        } catch(error) {
+            setChat(prev => [...prev, {content: "Unable to answer question", role: "assistant"}]);
+            console.log(error)
+        }
 
         setQuestion("")
     }
@@ -21,8 +35,8 @@ export default function Chatbot(){
     return(
         <div className="chat-container">
             <div className="chat-messages">
-                {chat.map((line) => (
-                    <ChatBubble content={line} />
+                {chat.map((message, index) => (
+                    <ChatBubble key={index} content={message.content} role={message.role} />
                 ))}
             </div>
             <form className="chatbot-input" onSubmit={handleSubmit}>
