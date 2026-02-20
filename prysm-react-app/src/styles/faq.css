@@ -13,15 +13,13 @@
 
 
 .faq-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding-top: 80px;
   box-sizing: border-box;
 }
 
 .faq-content {
   width: 80%;
+  margin:auto;
   max-width: 720px;
   display: flex;
   flex-direction: column;
