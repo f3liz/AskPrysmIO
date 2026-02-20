@@ -1,18 +1,13 @@
-import os
-from supabase import create_client, Client
-from dotenv import load_dotenv
+from db_connection import supabase
 
-# Load environment variables
-load_dotenv()
+def get_first_document():
+    response = supabase.table("PDFdocuments").select("*").limit(1).execute()
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if response.data:
+        return response.data[0]
+    else:
+        return {"message": "No rows found in PDFdocuments table"}
 
-if not SUPABASE_URL:
-    raise ValueError("SUPABASE_URL is not set in .env")
-
-if not SUPABASE_KEY:
-    raise ValueError("SUPABASE_SERVICE_ROLE_KEY is not set in .env")
-
-# Create Supabase client
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+if __name__ == "__main__":
+    result = get_first_document()
+    print(result)
