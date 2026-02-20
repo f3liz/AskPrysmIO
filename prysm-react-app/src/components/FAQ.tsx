@@ -6,6 +6,7 @@ import "../styles/faq.css"
 
 export default function FAQ() {
     const [isExpanded, setExpandedId] = useState<number | null>(null);
+    const [filteredFaqs, setFilteredFaqs] = useState(prysmFaqData);
 
     const handleToggle = (id: number) => {
         setExpandedId(isExpanded === id ? null : id);
@@ -13,12 +14,12 @@ export default function FAQ() {
 
     return(
         <div className="faq-container">
-            <SearchBar />
+            <SearchBar onSearch = {setFilteredFaqs} />
             <div className="faq-content">
-                {prysmFaqData.map((item)=> (
+                {filteredFaqs.map((item)=> (
                     <AccordionItem
                         key={item.id}
-                        title={""}
+                        title={item.question}
                         content={""}
                         isExpanded={isExpanded === item.id}
                         onToggle={() => handleToggle(item.id)}

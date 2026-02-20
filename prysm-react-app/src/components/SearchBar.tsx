@@ -1,22 +1,28 @@
 import { prysmFaqData } from "../data/prysmFaqData.ts";
-import { useState, type ReactEventHandler } from "react";
-import { useEffect } from "react";
+import { useState, useMemo } from "react";
 
-export function SearchBar(){
-    const [searchBarContent, setSearchBarContent] = useState("");
-    const [filteredFaqs, setFilteredFaqs] = useState(prysmFaqData);
+export function SearchBar({onSearch} : any){
+    const [searchTerm, setSearchTerm] = useState("");
 
-    // useEffect(()=> {
-    //     console.log(searchBarContent)
-    // }, [searchBarContent])
+    useMemo(() => {
+        const value = searchTerm.toLocaleLowerCase().trim();
 
-    const updateSearch = (e: React.ChangeEvent) =>{
-        
-    }
+        const filtered = value
+            ? prysmFaqData.filter((faq) => {
+                // Check against questions first
+                if (faq.question.toLowerCase().includes(value)) return true;
+
+                
+            }) : prysmFaqData
+
+            onSearch(filtered)
+
+            return filtered;
+    }, [searchTerm, onSearch])
 
     return(
         <form>
-            <input type="text" onChange={updateSearch}></input>
+            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search FAQs..."></input>
             <button type="submit">Submit</button>
         </ form>
     )
