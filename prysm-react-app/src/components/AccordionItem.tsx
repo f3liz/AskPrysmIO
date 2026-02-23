@@ -1,11 +1,7 @@
-type AccordionItemProps = {
-    title: string;
-    content: string;
-    isExpanded: boolean;
-    onToggle: () => void;
-};
+import type { AccordionItemProps, Section } from "../types"
 
-export default function AccordionItem({title, content, isExpanded, onToggle}: AccordionItemProps) 
+
+export default function AccordionItem({title, data, isExpanded, onToggle}: AccordionItemProps) 
 {
     return(
         <div className="accordion-item">
@@ -18,9 +14,8 @@ export default function AccordionItem({title, content, isExpanded, onToggle}: Ac
 
             {isExpanded && (
                 <div className="accordion-content">
-                {content}
                 </div>
-            )}
+      )}
         </div>
     )
 }
