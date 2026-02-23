@@ -16,13 +16,13 @@ export default function FAQ() {
         <div className="faq-container">
             <SearchBar onSearch = {setFilteredFaqs} />
             <div className="faq-content">
-                {filteredFaqs.map((item)=> (
+                {filteredFaqs.map((faq)=> (
                     <AccordionItem
-                        key={item.id}
-                        title={item.question}
-                        content={""}
-                        isExpanded={isExpanded === item.id}
-                        onToggle={() => handleToggle(item.id)}
+                        key={faq.id}
+                        title={faq.question}
+                        data={faq.sections}
+                        isExpanded={isExpanded === faq.id}
+                        onToggle={() => handleToggle(faq.id)}
                 />
                 ))}
             </div>
