@@ -42,9 +42,9 @@ export function SearchBar({onSearch} : SearchBarProps){
     }, [searchTerm, onSearch])
 
     return(
-        <form>
-            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search FAQs..."></input>
-            <button type="submit">Submit</button>
+        <form className="search-form">
+            <input className="search-input" type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search FAQs..."></input>
+            <button className="search-button" type="submit">🔍</button>
         </ form>
     )
 }
