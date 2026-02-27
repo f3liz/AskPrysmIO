@@ -1,7 +1,7 @@
 import pymupdf
 from fastapi import UploadFile, File, HTTPException
 from typing import List
-from utils import chunk_processing
+from backend.utils import chunk_util
 
 async def embeddings_process(file: UploadFile = File()):
     if not file.filename.endswith(".pdf"):
@@ -20,7 +20,7 @@ async def embeddings_process(file: UploadFile = File()):
             full_text += page.get_text()
 
         # chunks is an array of each 500 characters
-        chunks = chunk_processing.chunk_text(full_text)
+        chunks = chunk_util.chunk_text(full_text)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"PDF Processing Error: {str(e)}")
