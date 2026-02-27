@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import chats
+from routers import chats, check
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -17,3 +17,4 @@ def home():
     return {"message": "Backend running"}
 
 app.include_router(chats.router)
+app.include_router(check.router)
