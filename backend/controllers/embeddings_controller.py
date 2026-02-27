@@ -8,7 +8,7 @@ async def embeddings_process(file: UploadFile = File()):
             raise HTTPException(status_code=400, detail="File must be a PDF")
 
     try:
-        #pdf_content takes the file and turns it into 1 and 0
+        #pdf_content takes the file and turns it into 1 and 0.
         pdf_content = await file.read()
 
         # doc is now an object that understands pdf structure like pages, fonts, images
