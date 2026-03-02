@@ -113,3 +113,7 @@
     max-width: none;
   }
 }
+
+.no-results{
+color: white;
+}
