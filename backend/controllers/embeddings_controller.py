@@ -1,7 +1,7 @@
 import pymupdf
 from fastapi import UploadFile, File, HTTPException
 from typing import List
-from utils import  pdf_util
+from utils import  pdf_util, chunk_util
 
 async def embeddings_process(file: UploadFile = File()):
     if not file.filename.endswith(".pdf"):
@@ -10,9 +10,12 @@ async def embeddings_process(file: UploadFile = File()):
     try:
         pdf_content = await file.read()
         pages = pdf_util.extract_text(pdf_content)
-
+        
+        for page in pages:
+             chunks = chunk_util.chunk_text(page["content"])
         return{
-             "Pages": pages
+             "Pages": pages,
+             "Chunk": chunks
         }
 
     except Exception as e:
