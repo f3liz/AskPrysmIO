@@ -35,4 +35,4 @@ async def embeddings_process(file: UploadFile = File(), title: str = Form(...)):
         }
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"PDF Processing Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"PDF Embedding Error: {str(e)}")
