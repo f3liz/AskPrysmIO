@@ -16,15 +16,19 @@ export default function FAQ() {
         <div className="faq-container">
             <SearchBar onSearch = {setFilteredFaqs} />
             <div className="faq-content">
-                {filteredFaqs.map((faq)=> (
+                {filteredFaqs.length == 0 ? (
+                    <p>Please refer to Ask PrysmIo</p>
+                ) : (
+                    filteredFaqs.map((faq) => (
                     <AccordionItem
                         key={faq.id}
                         title={faq.question}
                         data={faq.sections}
                         isExpanded={isExpanded === faq.id}
                         onToggle={() => handleToggle(faq.id)}
-                />
-                ))}
+                    />
+                ))
+            )}
             </div>
         </div>
     )
