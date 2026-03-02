@@ -1,18 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, test, expect, vi } from "vitest";
-import FAQ from "./FAQ";
+import FAQ from "../components/FAQ";
 import { prysmFaqData } from "../data/prysmFaqData";
 
 // Mock AccordionItem so we only test FAQ logic
-vi.mock("./AccordionItem.tsx", () => ({
+vi.mock("../components/AccordionItem.tsx", () => ({
   default: ({ title }: { title: string }) => (
     <div data-testid="faq-item">{title}</div>
   ),
 }));
 
 // Mock SearchBar and simulate filtering behavior
-vi.mock("./SearchBar.tsx", () => ({
+vi.mock("../components/SearchBar", () => ({
   SearchBar: ({ onSearch }: any) => (
     <input
       placeholder="Search FAQs..."
