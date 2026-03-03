@@ -10,3 +10,11 @@ def text_embedding(text_chunks: list[str]) -> list[list[float]]:
     )
 
     return [item.embedding for item in response.data]
+
+def question_embedding(question: str) -> list[float]:
+    response = client.embeddings.create(
+        model="text-embedding-3-large",
+        input=question
+    )
+
+    return response.data[0].embedding
