@@ -29,9 +29,10 @@ async def embeddings_process(file: UploadFile = File(), title: str = Form(...)):
 
                 chunk_index += 1
 
+        total_chunks += len(chunks)
+
         return{
-            "Pages": pages,
-            "Chunk": chunks
+            "Total chunks inserted" : total_chunks
         }
 
     except Exception as e:
