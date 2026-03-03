@@ -1,5 +1,5 @@
 from openai import OpenAI
-from backend.config import settings
+from config import settings
 
 client = OpenAI(api_key=settings.OPENAI_EMBEDDING_KEY)
 

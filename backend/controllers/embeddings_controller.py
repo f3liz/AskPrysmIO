@@ -2,7 +2,7 @@ from fastapi import UploadFile, File, HTTPException, Form
 from utils import  pdf_util, chunk_util, embedding_util
 from db import supabase
 
-async def embeddings_process(file: UploadFile = File(), title: str = Form(...)):
+async def embeddings_process(file: UploadFile = File(), title: str = None):
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="File must be a PDF")
 
@@ -29,7 +29,7 @@ async def embeddings_process(file: UploadFile = File(), title: str = Form(...)):
 
                 chunk_index += 1
 
-        total_chunks += len(chunks)
+            total_chunks += len(chunks)
 
         return{
             "Total chunks inserted" : total_chunks

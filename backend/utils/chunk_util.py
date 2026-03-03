@@ -2,7 +2,7 @@ import tiktoken
 
 encode = tiktoken.encoding_for_model("text-embedding-3-large")
 
-def chunk_text(text: str, max_tokens: int = 800, overlap: int = 200):
+def chunk_text(text: str, max_tokens: int = 200, overlap: int = 50):
     
     tokens = encode.encode(text)
     chunks = []
