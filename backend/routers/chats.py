@@ -1,15 +1,24 @@
-from fastapi import APIRouter
-from controllers import chat_controller
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from controllers.chat_controller import generate_response
 
-router = APIRouter(prefix="/chats", tags=["chats"])
+router = APIRouter()
 
-class Request(BaseModel):
+# Request schema
+class ChatRequest(BaseModel):
     question: str
 
-class Response(BaseModel):
-    answer: str
-@router.post("/", response_model=Response)
-async def chat(request: Request) -> Response:
-    answer = await chat_controller.generate_response(request.question)
-    return Response(answer=answer)
+
+@router.post("/chat")
+async def chat(request: ChatRequest):
+    try:
+        answer = await generate_response(request.question)
+
+        return {
+            "question": request.question,
+            "answer": answer
+        }
+
+    except Exception as e:
+        print("Chat router error:", e)
+        raise HTTPException(status_code=500, detail="Chat request failed")

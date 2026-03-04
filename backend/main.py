@@ -10,12 +10,12 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
-    )
+)
 
 @app.get("/")
 def home():
     return {"message": "Backend running"}
 
-app.include_router(chats.router)
-app.include_router(check.router)
-app.include_router(embeddings.router)
+app.include_router(chats.router, prefix="/api", tags=["Chat"])
+app.include_router(check.router, prefix="/api", tags=["Health"])
+app.include_router(embeddings.router, prefix="/api", tags=["Embeddings"])
