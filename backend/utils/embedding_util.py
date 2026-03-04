@@ -5,7 +5,7 @@ client = OpenAI(api_key=settings.OPENAI_EMBEDDING_KEY)
 
 def text_embedding(text_chunks: list[str]) -> list[list[float]]:
     response = client.embeddings.create(
-        model="text-embedding-3-large",
+        model="text-embedding-3-small",
         input=text_chunks
     )
 
@@ -13,7 +13,7 @@ def text_embedding(text_chunks: list[str]) -> list[list[float]]:
 
 def question_embedding(question: str) -> list[float]:
     response = client.embeddings.create(
-        model="text-embedding-3-large",
+        model="text-embedding-3-small",
         input=question
     )
 
