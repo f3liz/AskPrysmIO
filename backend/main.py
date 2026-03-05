@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import chats, check
+from routers import chats, check, embeddings
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -18,3 +18,4 @@ def home():
 
 app.include_router(chats.router)
 app.include_router(check.router)
+app.include_router(embeddings.router)
