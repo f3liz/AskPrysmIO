@@ -21,8 +21,7 @@ clear answers based on the same internal documentation and research used to make
 ---
 ### Current Status (Sprint 3)
 
-Current MVP includes a chatbot interface and static FAQ content. A basic Python backend has been built out, 
-and one full req/res cycle has been built, mocking the answer to the question "Which finger should I use when scanning?"
+Current MVP includes a chatbot interface and static FAQ content. A basic Retrieval Augmented Generation (RAG) pipeline has been built out, with both retrievals and embeddings working. 
 
 ---
 
