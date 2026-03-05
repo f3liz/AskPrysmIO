@@ -1,52 +1,202 @@
 export const prysmFaqData = [
   {
     id: 1,
-    title: "What exactly is it measuring — and what does my Prysm Score actually mean? (Is this a “good vs bad” number or just information?)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    question: "What does my Prysm Score measure?",
+    sections: [
+      {
+        title: "What it measures",
+        content: ["Skin carotenoids (plant-derived antioxidant compounds stored in tissue)."]
+      },
+      {
+        title: "What the score represents",
+        content: ["An index of antioxidant status in the body based on carotenoid levels detected via light-based scanning."]
+      },
+      {
+        title: "Is this a good or bad score?",
+        content: ["No. It is an informational biomarker.", "It reflects current antioxidant reserves, not health status or diagnosis."]
+      }
+    ]
   },
   {
     id: 2,
-    title: "How accurate is it, and why might my score change from one scan to another? (Especially if I scan at home vs after a workout or stressful day.)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    question: "How accurate is the Prysm Score, and why does it change?",
+    sections: [
+      {
+        title: "Accuracy",
+        content: ["Consistent when properly calibrated, fully charged, used on a flat surface, and under stable conditions."]
+      },
+      {
+        title: "Why scores vary",
+        content: [
+          "Hydration level",
+          "Recent exercise",
+          "Acute stress",
+          "Sleep quality",
+          "Recovery state",
+          "Time of day",
+          "Environmental differences"
+        ]
+      },
+      {
+        title: "What changes mean",
+        content: ["Variation reflects physiological changes in antioxidant demand, not device inconsistency when properly used."]
+      }
+    ]
   },
   {
     id: 3,
-    title: "How often should I scan to see meaningful trends? (Daily, weekly, monthly?)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    question: "How often should I scan to track progress?",
+    sections: [
+      {
+        title: "Best practice",
+        content: [
+          "Scan once per week under similar conditions.",
+          "This smooths out daily fluctuations from stress or workouts while still capturing meaningful changes over time."
+        ]
+      }
+    ]
   },
   {
     id: 4,
-    title: "Do I need to be taking specific supplements for this to work? (Or can food and lifestyle changes alone move my score?)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    question: "Do I need supplements to improve my score?",
+    sections: [
+      {
+        title: "Short answer",
+        content: ["No. Supplements may support improvement, but food and lifestyle alone can move the score."]
+      },
+      {
+        title: "Ways to improve without supplements",
+        content: [
+          "Increased fruit and vegetable intake",
+          "Improved gut absorption",
+          "Better sleep",
+          "Reduced stress load",
+          "Reduced processed food intake"
+        ]
+      }
+    ]
   },
   {
     id: 5,
-    title: "What affects my score the most — food, stress, sleep, exercise, or supplements?",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
+    question: "What factors influence my Prysm Score the most?",
+    sections: [
+      {
+        title: "Primary drivers",
+        content: [
+          "Intake of colorful fruits and vegetables",
+          "Absorption efficiency (gut health)",
+          "Chronic stress load",
+          "Sleep quality",
+          "Inflammation burden",
+          "Oxidative demand (exercise, illness, environmental exposure)"
+        ]
+      },
+      {
+        title: "Key takeaway",
+        content: ["Food intake is foundational. Stress and recovery determine how quickly antioxidants are used."]
+      }
+    ]
   },
   {
     id: 6,
-    title: "Is this a medical test or a diagnosis? (And how is this different from blood work?)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+    question: "Is the Prysm Score a medical test?",
+    sections: [
+      {
+        title: "What it is",
+        content: ["A noninvasive wellness assessment", "A nutritional biomarker indicator"]
+      },
+      {
+        title: "What it is not",
+        content: ["It does not diagnose disease", "It does not replace blood work", "It does not evaluate organ function"]
+      },
+      {
+        title: "How it differs from blood work",
+        content: [
+          "Blood tests measure circulating biomarkers at a specific moment.",
+          "The Prysm scan measures stored carotenoids in tissue, reflecting longer-term antioxidant status."
+        ]
+      }
+    ]
   },
   {
     id: 7,
-    title: "Can this actually show me if what I’m already doing is working? (Or if I’m just guessing and hoping.)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet."
+    question: "Can my Prysm Score show if my habits are working?",
+    sections: [
+      {
+        title: "Short answer",
+        content: ["Yes — over time."]
+      },
+      {
+        title: "What trends suggest",
+        content: ["Increased intake", "Improved absorption", "Better oxidative balance"]
+      },
+      {
+        title: "How to interpret scans",
+        content: ["Single scans are snapshots.", "Multiple consistent scans validate trends."]
+      }
+    ]
   },
   {
     id: 8,
-    title: "Why would my score be lower after a workout or a stressful day? (Does that mean exercise or stress is “bad” for me?)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur."
+    question: "Why does my score drop after workouts or stress?",
+    sections: [
+      {
+        title: "Why this happens",
+        content: ["Exercise and stress increase oxidative demand."]
+      },
+      {
+        title: "Common causes",
+        content: ["Intense workouts", "Emotional stress", "Illness", "Sleep deprivation"]
+      },
+      {
+        title: "Reassurance",
+        content: ["A temporary dip does not mean exercise is harmful. It reflects antioxidant utilization."]
+      }
+    ]
   },
   {
     id: 9,
-    title: "Who is this really for — beginners, biohackers, busy moms, or everyone?",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium."
+    question: "Who should use the Prysm Score?",
+    sections: [
+      {
+        title: "Suitable for",
+        content: [
+          "Beginners wanting baseline data",
+          "Busy adults wanting measurable feedback",
+          "High performers optimizing recovery",
+          "Nutrition-focused individuals",
+          "Health-conscious families"
+        ]
+      },
+      {
+        title: "Note",
+        content: ["It is not limited to biohackers. It is designed for general wellness tracking."]
+      }
+    ]
   },
   {
     id: 10,
-    title: "How do I use my score to actually make better decisions instead of feeling overwhelmed? (What do I do with the number?)",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et harum quidem rerum facilis est et expedita distinctio."
+    question: "How can I use my Prysm Score without feeling overwhelmed?",
+    sections: [
+      {
+        title: "Recommended framework",
+        content: [
+          "Establish baseline",
+          "Make 1–2 simple nutrition or lifestyle shifts",
+          "Re-scan weekly",
+          "Track trend direction",
+          "Adjust gradually"
+        ]
+      },
+      {
+        title: "Purpose of the number",
+        content: [
+          "Guide small improvements",
+          "Validate habits",
+          "Create accountability",
+          "Reinforce consistency"
+        ]
+      }
+    ]
   }
 ];

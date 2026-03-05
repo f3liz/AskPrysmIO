@@ -5,6 +5,7 @@
 - Jesse Chum
 - Felix Chen
 - Kimberly Mageary
+- Alex Bolshakov
 
 ### Project Description:
 Our project is a mobile first web application designed to help NuSkin sales representatives quickly access accurate,
@@ -18,10 +19,9 @@ clear answers based on the same internal documentation and research used to make
 - [What is Prysm iO?](https://www.nuskin.com/us/en/site/opportunity/prysm-io-opportunity)
 
 ---
-### Current Status (Sprint 2)
+### Current Status (Sprint 3)
 
-Current MVP includes a chatbot interface and static FAQ content. A basic Python backend has been built out, 
-and one full req/res cycle has been built, mocking the answer to the question "Which finger should I use when scanning?"
+Current MVP includes a chatbot interface and static FAQ content. A basic Retrieval Augmented Generation (RAG) pipeline has been built out, with both retrievals and embeddings working. 
 
 ---
 
