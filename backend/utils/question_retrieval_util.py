@@ -12,7 +12,9 @@ def question_cleanup(question: str) -> str:
     return question
 
 async def search_docs(question: str, matches: int = 5, threshold = 0.75):
-    embedding = question_embedding(question)
+    clean_question = question_cleanup(question)
+
+    embedding = question_embedding(clean_question)
 
     response = supabase.rpc(
         "match_documents",
