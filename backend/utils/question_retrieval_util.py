@@ -7,6 +7,8 @@ def question_cleanup(question: str) -> str:
 
     question = re.sub(r"\s+", " ", question)
 
+    question = re.sub(r"[^a-zA-Z0-9\s.,!?'-]", "", question)
+
     return question
 
 async def search_docs(question: str, matches: int = 5, threshold = 0.75):
