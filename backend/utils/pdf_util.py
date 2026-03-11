@@ -7,7 +7,7 @@ def clean_pdf_text(text: str) -> str:
     text = re.sub(r"(\w+)-\n(\w+)", r"\1\2", text)
 
     text = re.sub(r"(?<!\n)\n(?!\n)", " ", text)
-    
+
     text = re.sub(r"\n{2,}", "\n\n", text)
 
     text = re.sub(r"[ \t]+", " ", text)
@@ -20,7 +20,7 @@ def extract_text(pdf_bytes: bytes):
     pages = []
 
     for i, page in enumerate(doc):
-        pdf_text = page.get_text
+        pdf_text = page.get_text()
 
         cleaned_text = clean_pdf_text(pdf_text)
 
