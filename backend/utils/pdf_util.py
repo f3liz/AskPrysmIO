@@ -20,9 +20,13 @@ def extract_text(pdf_bytes: bytes):
     pages = []
 
     for i, page in enumerate(doc):
+        pdf_text = page.get_text
+
+        cleaned_text = clean_pdf_text(pdf_text)
+
         pages.append({
             "page_number": i + 1,
-            "content": page.get_text()
+            "content": cleaned_text
         })
 
     return pages
