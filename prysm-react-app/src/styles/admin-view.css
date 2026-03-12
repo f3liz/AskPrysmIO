@@ -1,0 +1,118 @@
+.admin-page {
+  background: #050505;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.admin-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.admin-form {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.admin-input {
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+  border-radius: 20px;
+  color: #333;
+  background: #f7f7f7;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.admin-input:focus {
+  background: #fff;
+  border-color: #888;
+}
+
+.admin-input::placeholder {
+  color: #525151;
+}
+
+.admin-file-input {
+  padding: 10px;
+  font-size: 0.95rem;
+  color: #444;
+  background: #f7f7f7;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.admin-file-input::file-selector-button {
+  background: rgb(87, 99, 98);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+  margin-right: 15px;
+}
+
+.admin-file-input::file-selector-button:hover {
+  background: #004d40d0;
+}
+
+.admin-submit-btn {
+  margin-top: 10px;
+  padding: 14px 20px;
+  border-radius: 35px;
+  border: none;
+  background: rgb(87, 99, 98);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.admin-submit-btn:hover {
+  background: #004d40d0;
+}
+
+.admin-submit-btn:active {
+  transform: scale(0.98);
+}
