@@ -1,4 +1,3 @@
-
 def build_messages(question: str, context: str) -> str:
     system_prompt = """
         You are a document grounded assistant.
