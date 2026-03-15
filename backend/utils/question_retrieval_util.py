@@ -11,7 +11,7 @@ def question_cleanup(question: str) -> str:
 
     return question
 
-async def search_docs(question: str, matches: int = 5, threshold = 0.75):
+async def search_docs(question: str, matches: int = 3, threshold = 0.75):
     clean_question = question_cleanup(question)
 
     embedding = question_embedding(clean_question)
