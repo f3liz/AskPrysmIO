@@ -1,19 +1,24 @@
 import { useState } from "react";
 import "../styles/admin-view.css";
+import { sendEmbeddings } from "../api/embeddings";
 
 function Admin() {
   const [pdfTitle, setPdfTitle] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [uploadRes, setUploadRes] = useState("");
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
 
     console.log("Title Entered:", pdfTitle);
     console.log("File Selected:", pdfFile ? pdfFile.name : "No file chosen");
-  };
 
-  {
-    /* Add handleOnChange */
-  }
+    try {
+      const res = sendEmbeddings({ pdfTitle, pdfFile });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="admin-page">
