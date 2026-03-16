@@ -27,10 +27,10 @@ Current MVP includes a chatbot interface and static FAQ content. A basic Retriev
 ### Documentation
 Full documentation is available in the docs folder.
 
-- [Architecture Overview](architecture.md)
-- [Backend](backend.md)
-- [Setup Guide](setup.md)
-- [API Reference](api.md)
+- [Architecture Overview](docs/architecture.md)
+- [Backend](docs/backend.md)
+- [Setup Guide](docs/setup.md)
+- [API Reference](docs/api.md)
 
 ### Disclaimer
 This project is for educational purposes and is being built as a part of Green River College's Software Development 2025-2026 Senior Capstone.
