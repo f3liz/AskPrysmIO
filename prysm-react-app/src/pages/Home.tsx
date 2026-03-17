@@ -14,9 +14,14 @@ function Home() {
         </div>
 
         {/* Button linking to FAQ Page */}
-        <Link to="/faq">
-          <button className="navButton">Go to FAQ</button>
-        </Link>
+        <div className="btn-container">
+          <Link to="/faq">
+            <button className="navButton">Go to FAQ</button>
+          </Link>
+          <Link to="/admin">
+            <button className="navButton">Admin</button>
+          </Link>
+        </div>
       </header>
 
       {/* Main Content */}
