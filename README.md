@@ -19,19 +19,22 @@ clear answers based on the same internal documentation and research used to make
 - [What is Prysm iO?](https://www.nuskin.com/us/en/site/opportunity/prysm-io-opportunity)
 
 ---
-### Current Status (Sprint 3)
+### Current Status (Sprint 4)
 
-Current MVP includes a chatbot interface and static FAQ content. A basic Retrieval Augmented Generation (RAG) pipeline has been built out, with both retrievals and embeddings working. 
+Our current MVP includes a functional chatbot powered by a Retrieval-Augmented Generation (RAG) system, along with a static FAQ page for common questions.
+
+In upcoming sprints, we plan to focus on improving response accuracy and enhancing the overall user experience when interacting with the chatbot.
 
 ---
 ### Documentation
 Full documentation is available in the docs folder.
 
 - [Architecture Overview](docs/architecture.md)
+- [Frontend](docs/frontend.md)
 - [Backend](docs/backend.md)
 - [Setup Guide](docs/setup.md)
 - [API Reference](docs/api.md)
-
+---
 ### Disclaimer
 This project is for educational purposes and is being built as a part of Green River College's Software Development 2025-2026 Senior Capstone.
 
