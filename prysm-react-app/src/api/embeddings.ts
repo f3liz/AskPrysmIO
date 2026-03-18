@@ -1,14 +1,11 @@
-export async function sendEmbeddings(formData: object) {
+export async function sendEmbeddings(formData: FormData) {
   try {
     const route = import.meta.env.VITE_BACKEND_API_ROUTE_EMBEDDINGS;
     if (!route) throw new Error("Route not found");
 
     const response = await fetch(route, {
       method: "POST",
-      headers: {
-        enctype: "multipart/form-data",
-      },
-      body: JSON.stringify(formData),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -16,9 +13,9 @@ export async function sendEmbeddings(formData: object) {
     }
 
     const data = await response.json();
-    return data.answer;
+    return data;
   } catch (error) {
-    console.error("Question failed to upload: ", error);
+    console.error("PDF failed to upload: ", error);
     throw error;
   }
 }

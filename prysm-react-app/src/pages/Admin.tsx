@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "../styles/admin-view.css";
 import { sendEmbeddings } from "../api/embeddings";
 
@@ -6,17 +6,33 @@ function Admin() {
   const [pdfTitle, setPdfTitle] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [uploadRes, setUploadRes] = useState("");
-  const handleSubmit = (e: React.MouseEvent) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    console.log("Title Entered:", pdfTitle);
-    console.log("File Selected:", pdfFile ? pdfFile.name : "No file chosen");
+    setUploadRes("Uploading...");
+
+    if (!pdfFile) {
+      setUploadRes("Please select a file first.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", pdfTitle);
+    formData.append("file", pdfFile);
 
     try {
-      const res = sendEmbeddings({ pdfTitle, pdfFile });
+      const res = await sendEmbeddings(formData);
       console.log(res);
+      setUploadRes("Upload successful!");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setPdfTitle("");
     } catch (error) {
       console.log(error);
+      setUploadRes("Upload failed. Please try again.");
     }
   };
 
@@ -28,7 +44,7 @@ function Admin() {
             <h1>PDF Upload</h1>
           </div>
           <div className="input-group">
-            <label htmlFor="">PDF Title</label>
+            <label htmlFor="pdfTitle">PDF Title</label>
             <input
               type="text"
               id="pdfTitle"
@@ -47,6 +63,7 @@ function Admin() {
               id="pdfFile"
               className="admin-file-input"
               accept=".pdf"
+              ref={fileInputRef}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (e.target.files && e.target.files.length > 0) {
                   setPdfFile(e.target.files[0]);
@@ -61,6 +78,23 @@ function Admin() {
           >
             Upload Document
           </button>
+
+          {uploadRes && (
+            <div
+              style={{
+                marginTop: "15px",
+                textAlign: "center",
+                fontWeight: "bold",
+                color: uploadRes.includes("successful")
+                  ? "green"
+                  : uploadRes === "Uploading..."
+                    ? "blue"
+                    : "red",
+              }}
+            >
+              {uploadRes}
+            </div>
+          )}
         </form>
       </div>
     </div>

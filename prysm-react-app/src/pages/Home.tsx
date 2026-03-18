@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 function Home() {
   return (
     <div className="page">
-      {/* Header */}
       <header className="navbar">
         <div className="brand">
           <span className="logoText">
@@ -13,18 +12,16 @@ function Home() {
           </span>
         </div>
 
-        {/* Button linking to FAQ Page */}
         <div className="btn-container">
           <Link to="/faq">
             <button className="navButton">Go to FAQ</button>
           </Link>
           <Link to="/admin">
-            <button className="navButton">Admin</button>
+            <button className="navButton">File Upload</button>
           </Link>
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="content">
         <section
           className="prysm"

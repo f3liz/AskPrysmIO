@@ -10,6 +10,7 @@ export async function login(formData: object): Promise<string> {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(formData),
     });
 
@@ -18,7 +19,7 @@ export async function login(formData: object): Promise<string> {
     }
 
     const data = await response.json();
-    return data.answer;
+    return data.message;
   } catch (error) {
     console.error("Failed to login: ", error);
     throw error;
