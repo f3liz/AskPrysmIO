@@ -9,41 +9,19 @@
 - Frontend: https://askprysmio.vercel.app
 - Backend: https://askprysmio.onrender.com
 
-# Local Environment
-
-## Frontend Setup (Vite + React)
-
-## Backend Setup (FastAPI)
-
-# Deployment
-
-## Frontend Deployment Setup (Vercel)
-
-## Backend Deployment Setup (Render)
-
-## Using Application
-
-# Supabase
-account setup (same for openai and openrouter)
-
-# OpenAI
-
-# OpenRouter
-
-## ENV
-dont put our actual keys, probably lay down examples or point where to get it
-ex:
-
-OPENAI_LLM_KEY = api key from OpenAI
-
-# Notes
-
-
 # Setup and deployment instructions
-
 - Local Setup
 - Git clone the askprysmio repository as your own
-- Cd into the askprysmio foldeer
+- Cd into the askprysmio folder
+
+# Local Environment
+- Navigate to the front end
+- cd frontend
+- Install dependencies
+- npm install
+- Run development server
+- npm run dev
+- Frontend will run on http://localhost:5173
 
 # Frontend Setup (Vite + React)
 - cd frontend
@@ -57,13 +35,12 @@ OPENAI_LLM_KEY = api key from OpenAI
 - uvicorn main:app --reload
 - backend will n on http://localhost:8000
 
-# Deployment Setup Frontend (Vercel)
+# Frontend Deployment Setup (Vercel)
 - import project into vercel
-- Set enviroment variable to
-- VITE_API_URL=https://askprysmio.onrender.com
+- Set enviroment variable to the backend API
 - deploy it once your comfortable with settings
 
-# Deployment Setup Backend (Render)
+# Backend Deployment Setup (Render)
 - Create a Web Service
 - Connect your Github repo
 - configure to these before deployment:
@@ -72,13 +49,48 @@ OPENAI_LLM_KEY = api key from OpenAI
 - Start Command: uvicorn main:app --host 0.0.0.0 --port 10000
 - deploy it once your comfortable with settings
 
-# Using the application
+
+# Using Application
 - Open the deployed frontend
 - Enter a message in the chatbot
 - The frontend sends a POST request to the backend
 - The chatbot response is displayed on screen
 
-# Notes 
+# Supabase
+- create an account at https://supabase.com
+- create a new project
+- copy your project url, anon/public key
+- add them to your backend enviroment variables
+
+# OpenAI
+- create an account at https://platform.openai.com
+- Generate an API key
+- add the key to your enviroment variables
+
+# OpenRouter
+- create an account at https://openrouter.ai
+- generate an API key
+- add the key to your enviroment variables
+
+# ENV
+- put al your API keys in a env file. One for the frontend and one for the back end
+- EXAMPLE: 
+- OPENAI_LLM_KEY=your_openai_api_key 
+- OPENROUTER_API_KEY=your_openrouter_key 
+- SUPABASE_URL=your_supabase_url 
+- SUPABASE_KEY=your_supabase_key
+
+- Frontend .env
+- VITE_API_URL=http://localhost:8000
+
+# Notes
 - Render free tier may take ~30–50 seconds to wake up after inactivity
 - Ensure API keys are stored in environment variables (not in code)
+
+
+
+
+
+
+
 
