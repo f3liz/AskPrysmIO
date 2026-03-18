@@ -38,5 +38,55 @@
     ```
 
 ## Check Route
+- This route verifies that the backend can successfully connect to Supabase. Main purpose of this route is to be used as a health check endpoint to confirm access to our database.
+    - If connection is successful
+    ```
+    {
+        "Status": "Connected to Supabase",
+        "Rows": 1
+    }
+    ```
+    - If connection is unsuccessful
+    ```
+    {
+        "Status": "error",
+        "Error": "error message"
+    }
+    ```
+    - Example call using Check route
+    ```
+    async function checkDB() {
+        const res = await fetch("http://localhost:8000/check/db");
+        return await res.json();
+    }
+
+    checkDB().then(console.log);
+    ```
 
 ## Embedding Route
+- This POST route is responsible for taking in our PDFs that contain data and breaking them down to smaller pieces for embedding then storing them inside Supabase for later retrieval.
+    - Requires form data with a file and title field with file being type PDF and title type string
+    - Successful call of this route should return
+    ```
+    {
+        "Total chunks inserted": 10
+    }
+    ```
+    - Example call using Embedding route
+    ```
+    export async function sendEmbeddings(formData: object) {
+    
+        const route = import.meta.env.
+
+        const response = await fetch(route, {
+        method: "POST",
+        headers: {
+            enctype: "multipart/form-data",
+        },
+        body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+        return data.answer;
+    } 
+    ```
