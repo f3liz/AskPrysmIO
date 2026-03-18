@@ -1,20 +1,8 @@
 from db import supabase
 from .embedding_util import question_embedding
-import re
 
-def question_cleanup(question: str) -> str:
-    question = question.strip()
-
-    question = re.sub(r"\s+", " ", question)
-
-    question = re.sub(r"[^a-zA-Z0-9\s.,!?'-]", "", question)
-
-    return question
-
-async def search_docs(question: str, matches: int = 3, threshold = 0.75):
-    clean_question = question_cleanup(question)
-
-    embedding = await question_embedding(clean_question)
+async def search_docs(question: str, matches: int = 5, threshold = 0.75):
+    embedding = question_embedding(question)
 
     response = supabase.rpc(
         "match_documents",
