@@ -11,9 +11,9 @@ The backend is built using FastAPI and is responsible for:
 - Sending user questions and retrieved context to OpenRouter to generate responses.
 
 ## Quick Links
-- Environment Configuration
-- Utility Functions
-- API Routes
+- [Environment Configuration](env.md)
+- [Utility Functions](utilities.md)
+- [API Documentation](api.md)
   
 ## Tech Stack
 
@@ -24,20 +24,6 @@ Major libraries and tools used.
 - OpenRouter
 - PyMuPDF
 - tiktoken
-
-## Embedding Pipeline
-Example processing flow:
-```
-PDF Upload
-    ↓
-Text Extraction
-    ↓
-Text Chunking
-    ↓
-Embedding Generation
-    ↓
-Stored in Database
-```
 
 ## Running the Backend
 **Both configurations require that you be inside the `backend`.**
