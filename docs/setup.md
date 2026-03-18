@@ -9,6 +9,36 @@
 - Frontend: https://askprysmio.vercel.app
 - Backend: https://askprysmio.onrender.com
 
+# Local Environment
+
+## Frontend Setup (Vite + React)
+
+## Backend Setup (FastAPI)
+
+# Deployment
+
+## Frontend Deployment Setup (Vercel)
+
+## Backend Deployment Setup (Render)
+
+## Using Application
+
+# Supabase
+account setup (same for openai and openrouter)
+
+# OpenAI
+
+# OpenRouter
+
+## ENV
+dont put our actual keys, probably lay down examples or point where to get it
+ex:
+
+OPENAI_LLM_KEY = api key from OpenAI
+
+# Notes
+
+
 # Setup and deployment instructions
 
 - Local Setup
@@ -51,3 +81,4 @@
 # Notes 
 - Render free tier may take ~30–50 seconds to wake up after inactivity
 - Ensure API keys are stored in environment variables (not in code)
+
