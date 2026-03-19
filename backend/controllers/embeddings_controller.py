@@ -15,7 +15,7 @@ async def embeddings_process(file: UploadFile = File(), title: str = None):
         
         for page in pages:
             chunks = chunk_util.chunk_text(page["content"])
-            embeddings = await embedding_util.text_embedding(chunks)
+            embeddings = embedding_util.text_embedding(chunks)
 
             for chunk, embedding in zip(chunks, embeddings):
                 supabase.table("pdfdocuments").insert({
