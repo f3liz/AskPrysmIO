@@ -2,15 +2,18 @@ from fastapi import FastAPI
 from routers import chats, check, embeddings, auth
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
+from dotenv import load_dotenv
 
+load_dotenv()
 
+HOSTED_URL = os.getenv("HOSTED_URL")
 app = FastAPI()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173",HOSTED_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
