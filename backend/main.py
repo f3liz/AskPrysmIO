@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import os
 from routers import chats, check, embeddings, auth
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
