@@ -1,0 +1,122 @@
+.page-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: var(--secondary);
+}
+
+.loginWrapper {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.loginHeader h2 {
+  font-size: 24px;
+  color: white;
+  margin: 0 0 8px 0;
+}
+
+.loginHeader p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.inputGroup input {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.inputGroup input:focus {
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.submitButton {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background: #00362d;
+}
+
+.errorMessage {
+  color: #ff8787;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: -4px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.inputGroup input.inputError {
+  border-color: #ff8787;
+  background: rgba(255, 107, 107, 0.05);
+}
+
+.inputGroup input.inputError:focus {
+  border-color: #ff8787;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
