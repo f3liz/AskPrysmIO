@@ -1,24 +1,32 @@
-from fastapi import FastAPI
 import os
-from routers import chats, check, embeddings, auth
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
 from dotenv import load_dotenv
+from routers import chats, check, embeddings, auth
 
 load_dotenv()
 
-HOSTED_URL = os.getenv("HOSTED_URL")
 app = FastAPI()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+origins = [
+    "http://localhost:5173"
+]
+
+HOSTED_URL = os.getenv("HOSTED_URL")
+if HOSTED_URL:
+    origins.append(HOSTED_URL)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173",HOSTED_URL],
+    allow_origins=origins,
+    allow_origin_regex=r"https://askprysmio.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
-    )
+)
 
 @app.get("/")
 def home():
