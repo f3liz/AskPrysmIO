@@ -81,3 +81,75 @@ Provides utilities for text extraction and cleaning from uploaded PDFs.
 
 
 ## Question Retrieval Util
+This module is responsible for fetching the relevant context used in the chatbot’s response generation.
+### This module:
+- Imports the Supabase client for database interaction.
+- Imports the `question_embedding` utility to generate embeddings.
+- Uses regular expressions for cleaning and normalizing user input.
+- Calls a database function `match_documents` to perform vector similarity search.
+
+### Function: `question_cleanup`
+**Input:** A raw user question(`str`).
+
+**Output:**
+- A cleaned and normalized question string.
+
+### How It Works
+1. Removes leading and trailing whitespace.
+2. Replaces multiple spaces with a single space.
+3. Removes unwanted special characters, keeping only:
+     - Letters (a-z, A-Z)
+     - Numbers (0-9)
+     - Basic Punctuation (`.,!?-`)
+
+### Function: `search_docs`
+**Input:**
+| Parameter | Description                 | Default  |
+|-----------|-----------------------------|----------|
+| question  | User-submitted query.       | str      |
+| matches   | number of results returned. | int      |
+| threshold | Minimum similarity score.   | float    |
+
+**Output:**
+- A cleaned and normalized question string.
+
+### How It Works
+1. Removes leading and trailing whitespace.
+2. Replaces multiple spaces with a single space.
+3. Removes unwanted special characters, keeping only:
+     - Letters (a-z, A-Z)
+     - Numbers (0-9)
+     - Basic Punctuation (`.,!?-`)
+
+
+## Prompt Builder Util
+Constructs structured messages for the LLM by combining the user’s question with retrieved context. This module ensures that responses are grounded strictly in provided documents and follow defined behavioral rules.
+
+### This module:
+- Defines a system prompt that enforces strict response guidelines.
+- Formats the user prompt by combining retrieved context with the user's question.
+- Returns messages in a structured format compatible with the frontend chat interface.
+
+### Function: `build_messages`
+**Input:**
+| Parameter | Description                 | Default  |
+|-----------|-----------------------------|----------|
+| question  | User-submitted query.       | str      |
+| context   | Retrieved document context. | str      |
+
+**Output:**
+- A list of message obkects formatted for an LLM.
+  - Each message contains a `role`(`system` or `user`) and `content`.
+
+### How It Works
+1. A system prompt is defined to control LLM behavior and enforce rules.
+2. The system prompt includes constraints such as:
+  - Only used provided context
+  - Do not fabricate or use outside knowledge
+  - Return a fallback response if context is insufficient
+  - Ask for clarification when input is ambiguous
+3. A user prompt is constructed by inserting retrieved context and the original user question.
+4. Both prompts are cleaned using `.strip()` to remove extra whitespace.
+5. The function returns a list of messages:
+- System message (instructions)
+- User message (context + question)
