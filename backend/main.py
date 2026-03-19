@@ -12,7 +12,8 @@ app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 origins = [
-    "http://localhost:5173","https://askprysmio.vercel.app"
+    "http://localhost:5173",
+    "https://askprysmio.vercel.app",
 ]
 
 app.add_middleware(
@@ -20,7 +21,8 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 @app.get("/")
