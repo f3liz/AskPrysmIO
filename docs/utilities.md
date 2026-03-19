@@ -4,6 +4,7 @@ This section documents the utility functions responsible for handling critical p
 - [Chunking Util](#chunking-util)
 - [PDF Util](#pdf-util)
 - [Question Retrieval Util](#question-retrieval-util)
+- [Prompting Util](#prompt-builder-util)
 
 
 ## Embedding Util
