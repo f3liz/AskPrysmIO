@@ -154,3 +154,30 @@ Constructs structured messages for the LLM by combining the user’s question wi
 5. The function returns a list of messages:
 - System message (instructions)
 - User message (context + question)
+
+## LLM Util
+
+Handles communication with the LLM by sending structured messages and returning a generated response. This acts as the single integration point between the backend and the LLM provider.
+
+### This module:
+- Initializes an async OpenAI client using OpenRouter configuration.
+- Sends formatted chat messages to the configured LLM model.
+- Applies consistent generation settings across all requests.
+- Returns only the generated assistant response text.
+
+### Function: `generate_answer`
+
+**Input:**
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| messages | Structured chat messages sent to the LLM. Each message contains a `role` and `content`. | list[dict] |
+
+Expected message format:
+
+```python
+[
+  {"role": "system", "content": "..."},
+  {"role": "user", "content": "..."}
+]
+```
