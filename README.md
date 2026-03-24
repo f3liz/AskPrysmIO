@@ -1,4 +1,4 @@
-# AskPrysmIO
+# AskPrysmiO
 ### Team Name: IO Opps
 
 ### Team Members:
@@ -6,11 +6,11 @@
 - Felix Chen
 - Kimberly Mageary
 - Alex Bolshakov
-
+---
 ### Project Description:
-Our project is a mobile first web application designed to help NuSkin sales representatives quickly access accurate,
+Our project is a mobile-first web application designed to help NuSkin sales representatives quickly access accurate,
 trustworthy information about NuSkin's newly launched product, Prysm iO. Our platform provides a simple and intuitive
-interface where users can either view commonly asked questions, or interact with an AI powered assistant to recieve 
+interface where users can either view commonly asked questions or interact with an AI-powered assistant to receive 
 clear answers based on the same internal documentation and research used to make Prysm iO.
 
 ### Quick Links for More Info
@@ -19,41 +19,22 @@ clear answers based on the same internal documentation and research used to make
 - [What is Prysm iO?](https://www.nuskin.com/us/en/site/opportunity/prysm-io-opportunity)
 
 ---
-### Current Status (Sprint 3)
+### Current Status (Sprint 4)
 
-Current MVP includes a chatbot interface and static FAQ content. A basic Retrieval Augmented Generation (RAG) pipeline has been built out, with both retrievals and embeddings working. 
+Our current MVP includes a functional chatbot powered by a Retrieval-Augmented Generation (RAG) system, along with a static FAQ page for common questions.
 
----
-
-### How to Run Locally
-1. Clone the repo
-2. Install dependencies
-   ```
-     cd ./prysm-react-app
-     npm install
-   ```
-3. Run the dev server
-   ```
-     npm run dev
-   ```
-4. Go to http://localhost:5173
+In upcoming sprints, we plan to focus on improving response accuracy and enhancing the overall user experience when interacting with the chatbot.
 
 ---
+### Documentation
+Full documentation is available in the docs folder.
 
-### Project Structure
-```
-/backend  
-  /controllers   # Handles request logic and responses  
-  /routers       # Defines API routes and endpoints  
-
-/prysm-react-app  
-  /src  
-    /api         # Frontend API helpers for communicating with the backend  
-    /components  # Reusable UI components (Chatbot, FAQ items, etc.)  
-    /data        # Static or mock data used during MVP development  
-    /styles      # Global and component-level styling (CSS)
-```
-
+- [Architecture Overview](docs/architecture.md)
+- [Frontend](docs/frontend.md)
+- [Backend](docs/backend.md)
+- [Setup Guide](docs/setup.md)
+- [API Reference](docs/api.md)
+---
 ### Disclaimer
-This project is for educational purposes and is being built as a part of Green River College's Software Development 2025-2026 senior capstone.
+This project is for educational purposes and is being built as a part of Green River College's Software Development 2025-2026 Senior Capstone.
 
