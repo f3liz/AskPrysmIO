@@ -10,43 +10,55 @@
 - Backend: https://askprysmio.onrender.com
 
 # Setup and deployment instructions
-- Local Setup
-- Git clone the askprysmio repository as your own
-- Cd into the askprysmio folder
+- git clone the AskPrysmIO repository as your own
+- cd into the AskPrysmIO folder
 
 # Local Environment
-- Navigate to the front end
-- cd frontend
-- Install dependencies
-- npm install
-- Run development server
+Steps to setup locally
+## Frontend Setup (Vite + React)
+- cd into prysm-react-app
+- npm i
 - npm run dev
-- Frontend will run on http://localhost:5173
+- frontend will run on http://localhost:5173
+- Shut down instructions:
+    - ctrl + c to end front end
 
-# Frontend Setup (Vite + React)
-- cd frontend
-- npm install 
-- npm run dev
-- front end will run on http://localhost:5173
+## Backend Setup (FastAPI)
+- cd into backend
+- For Mac:
+```
+python3 -m venv venv
+source venv/bin/activate
+python -m pip install -r requirements.txt
+uvicorn main:app --reload
+```
+- For Windows:
+```
+python -m venv venv
+venv\Scripts\activate
+python -m pip install -r requirements.txt
+uvicorn main:app --reload
+```
+- After first time installation, to run backend normally just repeat lines 2 and 4 of code above
+- backend will run on http://localhost:8000
+- Shut down instructions:
+    - ctrl + c to end backend
+    - type deactivate to shut down virtual environment
 
-# Backend Setup (FastAPI)
-- cd backend
-- pip install -r requirements.text
-- uvicorn main:app --reload
-- backend will n on http://localhost:8000
-
-# Frontend Deployment Setup (Vercel)
-- import project into vercel
-- Set enviroment variable to the backend API
+# Hosting/Deployment
+Steps for hosting/deployment
+## Frontend Deployment Setup (Vercel)
+- Import project into vercel
+- Set enviroment variable to the backend API URL
 - deploy it once your comfortable with settings
 
-# Backend Deployment Setup (Render)
+## Backend Deployment Setup (Render)
 - Create a Web Service
 - Connect your Github repo
-- configure to these before deployment:
-- Root Directory: backend
-- Build Command: pip install -r requirements.txt
-- Start Command: uvicorn main:app --host 0.0.0.0 --port 10000
+- Configure to these before deployment:
+    - Root Directory: backend
+    - Build Command: pip install -r requirements.txt
+    - Start Command: uvicorn main:app --host 0.0.0.0 --port 10000
 - deploy it once your comfortable with settings
 
 
@@ -57,35 +69,46 @@
 - The chatbot response is displayed on screen
 
 # Supabase
-- create an account at https://supabase.com
-- create a new project
-- copy your project url, anon/public key
-- add them to your backend enviroment variables
+- Create an account at https://supabase.com
+- Create a new project
+- Copy your project url and anon/public key
+- Add them to your backend enviroment variables
+- Create table to store embeddings
 
 # OpenAI
-- create an account at https://platform.openai.com
-- Generate an API key
-- add the key to your enviroment variables
+- Create an account at https://platform.openai.com
+- Generate an API key for embeddings
+- Add the key to your backend env
 
 # OpenRouter
-- create an account at https://openrouter.ai
-- generate an API key
-- add the key to your enviroment variables
+- Create an account at https://openrouter.ai
+- Generate an API key
+- Add the key to your backend env
 
 # ENV
-- put al your API keys in a env file. One for the frontend and one for the back end
-- EXAMPLE: 
-- OPENAI_LLM_KEY=your_openai_api_key 
-- OPENROUTER_API_KEY=your_openrouter_key 
-- SUPABASE_URL=your_supabase_url 
-- SUPABASE_KEY=your_supabase_key
+- Have two envs, one for backend and one for frontend
 
-- Frontend .env
-- VITE_API_URL=http://localhost:8000
+- Backend env requirements: 
+    - SUPABASE_URL
+    - SUPABASE_SERVICE_ROLE_KEY
+    - OPENAI_EMBEDDING_KEY
+    - OPENROUTER_API_KEY
+    - OPENROUTER_BASE_URL
+    - APP_URL
+    - APP_NAME
+    - LLM_MODEL
+    - ADMIN_USER
+    - ADMIN_PASSWORD
+    - ACCESS_TOKEN_EXPIRE_MINUTES
+    - ALGORITHM
+    - SECRET_KEY
+
+- Frontend env requirements:
+    - VITE_API_URL=(your backend URL)
 
 # Notes
 - Render free tier may take ~30–50 seconds to wake up after inactivity
-- Ensure API keys are stored in environment variables (not in code)
+- Ensure API keys are stored in environment variables
 
 
 
