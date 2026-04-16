@@ -16,6 +16,24 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 pre_hashed_admin_pwd = hashlib.sha256(ADMIN_PASSWORD_PLAIN.encode('utf-8')).hexdigest().encode('utf-8')
 ADMIN_PASSWORD_HASH = bcrypt.hashpw(pre_hashed_admin_pwd, bcrypt.gensalt())
 
+def require_auth(request: Request):
+    token = request.cookies.get("access_token")
+
+    if not token:
+        raise HTTPException(
+            status_code=401, 
+            detail="Not authenticated"
+            )
+    
+    try:
+        jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
+    except JWTError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired token"
+        )
+
 def verify_password(plain_password: str, hashed_password: bytes):
 
     pre_hashed_attempt = hashlib.sha256(plain_password.encode('utf-8')).hexdigest().encode('utf-8')
