@@ -10,6 +10,6 @@ class Request(BaseModel):
 class Response(BaseModel):
     answer: str
 @router.post("/", response_model=Response)
-async def chat(request: Request) -> Response:
+async def chat(request: Request, _: Depends(auth.require_auth)) -> Response:
     answer = await chat_controller.generate_response(request.question)
     return Response(answer=answer)

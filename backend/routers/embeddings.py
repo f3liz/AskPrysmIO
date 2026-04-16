@@ -4,7 +4,7 @@ from controllers import embeddings_controller
 router = APIRouter(prefix="/embeddings", tags=["embeddings"])
 
 @router.post("/")
-async def upload_file(file: UploadFile = File(...), title: str = Form(...)):
+async def upload_file(file: UploadFile = File(...), title: str = Form(...), _: Depends(auth.require_auth)):
     
     result = await embeddings_controller.embeddings_process(file, title)
     
