@@ -1,113 +1,155 @@
+:root {
+  --bg-dark: #0b0f13;
+  --surface-dark: #161b22;
+  --accent-glow: #2dd4bf; /* Electric Teal */
+  --text-dim: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --error-red: #ff8787;
+}
+
+/* Page Layout */
 .page-login {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
-  background-color: var(--secondary);
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-dark);
+  /* Subtle glow in the corner to match Home page */
+  background: radial-gradient(circle at 0% 0%, rgba(45, 212, 191, 0.05) 0%, var(--bg-dark) 50%);
+  margin: 0;
 }
 
+/* Glassmorphism Wrapper */
 .loginWrapper {
   position: relative;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
+  background: var(--surface-dark); /* Solid base */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
   padding: 40px;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   box-sizing: border-box;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Decorative top bar to match Chatbot scanner */
+.loginWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 2px;
+  background: var(--accent-glow);
+  box-shadow: 0 0 15px var(--accent-glow);
+  border-radius: 0 0 4px 4px;
 }
 
 .loginHeader h2 {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 800;
   color: white;
   margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
 }
 
 .loginHeader p {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 24px 0;
+  color: var(--text-dim);
+  margin: 0 0 32px 0;
   line-height: 1.4;
 }
 
+/* Form Styles */
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   text-align: left;
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .inputGroup label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-glow); /* Labels now use the accent color */
+  opacity: 0.9;
 }
 
 .inputGroup input {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 14px;
   color: white;
   font-size: 16px;
   outline: none;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .inputGroup input:focus {
-  border-color: var(--primary);
-  background: rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-glow);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.1);
 }
 
+/* High-Action Submit Button */
 .submitButton {
-  background: var(--primary);
-  color: white;
+  background: var(--accent-glow);
+  color: var(--bg-dark); /* Dark text on bright button for readability */
   border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 16px;
+  border-radius: 10px;
+  font-weight: 700;
   font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
   margin-top: 10px;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
 }
 
 .submitButton:hover {
-  background: #00362d;
+  background: #24b2a0; /* Slightly darker teal */
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
 }
 
+/* Error States */
 .errorMessage {
-  color: #ff8787;
-  background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.3);
-  border-radius: 8px;
-  padding: 12px;
+  color: var(--error-red);
+  background: rgba(255, 135, 135, 0.1);
+  border: 1px solid rgba(255, 135, 135, 0.2);
+  border-radius: 10px;
+  padding: 14px;
   font-size: 14px;
   text-align: center;
-  margin-bottom: -4px;
+  margin-bottom: 8px;
   animation: slideDown 0.3s ease-out;
 }
 
 .inputGroup input.inputError {
-  border-color: #ff8787;
-  background: rgba(255, 107, 107, 0.05);
+  border-color: var(--error-red);
+  background: rgba(255, 135, 135, 0.05);
 }
 
 .inputGroup input.inputError:focus {
-  border-color: #ff8787;
-  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+  border-color: var(--error-red);
+  box-shadow: 0 0 0 4px rgba(255, 135, 135, 0.1);
 }
 
 @keyframes slideDown {
