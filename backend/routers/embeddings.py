@@ -1,10 +1,10 @@
-from fastapi import APIRouter, UploadFile, File, Form
-from controllers import embeddings_controller 
+from fastapi import APIRouter, UploadFile, File, Form, Depends
+from backend.controllers import embeddings_controller, auth_controller
 
 router = APIRouter(prefix="/embeddings", tags=["embeddings"])
 
 @router.post("/")
-async def upload_file(file: UploadFile = File(...), title: str = Form(...), _: Depends(auth.require_auth)):
+async def upload_file(file: UploadFile = File(...), title: str = Form(...), _ = Depends(auth_controller.require_auth)):
     
     result = await embeddings_controller.embeddings_process(file, title)
     

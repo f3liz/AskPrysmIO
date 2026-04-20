@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Response, Depends
 from pydantic import BaseModel
-from controllers.auth_controller import process_login, process_logout
+from backend.controllers.auth_controller import process_login, process_logout
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 

@@ -1,4 +1,4 @@
-from db import supabase
+from backend.db import supabase
 
 def get_first_document():
     response = supabase.table("pdfdocuments").select("*").limit(1).execute()

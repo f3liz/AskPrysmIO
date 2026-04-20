@@ -1,8 +1,8 @@
-from fastapi import APIRouter
-from controllers import check_controller
+from fastapi import APIRouter, Depends
+from backend.controllers import check_controller, auth_controller
 
 router = APIRouter(prefix="/check", tags=["check"])
 
 @router.get("/db")
-def check_db_connection(_: Depends(auth.require_auth)):
+def check_db_connection(_ = Depends(auth_controller.require_auth)):
     return check_controller.check_supabase_connection()

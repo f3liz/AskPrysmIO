@@ -1,5 +1,5 @@
 from openai import AsyncOpenAI
-from config import settings
+from backend.config import settings
 
 client = AsyncOpenAI(
     api_key=settings.OPENROUTER_API_KEY,

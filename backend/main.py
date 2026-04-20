@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
 from dotenv import load_dotenv
-from routers import chats, check, embeddings, auth
+from backend.routers import chats, check, embeddings, auth
 
 load_dotenv()
 
