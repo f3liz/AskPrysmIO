@@ -12,3 +12,8 @@ def check_supabase_connection():
             "Status" : "error",
             "Error" : str(e)
         }
+
+def check_auth_connection():
+    return {
+        "message": "Successfully authenticated!"
+    }
