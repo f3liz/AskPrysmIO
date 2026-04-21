@@ -97,23 +97,29 @@ const Login = () => {
 
           <div className="inputGroup">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              className={error ? "inputError" : ""}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError((prev) => ({...prev, password: "", server: ""}));
-              }}
-            />
+
+            <div className="passwordWrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className={error.password ? "inputError" : ""}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError((prev) => ({...prev, password: "", server: ""}));
+                }}
+              />
+
+              <button type = "button" className="togglePassword" onClick={() => setShowPassword((prev) => !prev)}
+              >{showPassword ? "Hide" : "Show"}</button>
+            </div>
             {error.password && (
               <span className="fieldError">{error.password}</span>
             )}
           </div>
 
-          <button type="submit" className="submitButton">
-            Log In
+          <button type="submit" className="submitButton" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Log in"}
           </button>
         </form>
       </div>
