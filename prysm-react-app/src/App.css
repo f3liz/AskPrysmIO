@@ -3,12 +3,14 @@
   --secondary: #0a0b0b; /* Light mint */
   --accent: #ffffff;
 }
-html, body, #root {
-    margin: 0;
-    height: 100%;
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
 }
 
-html{
+html {
   background-color: var(--secondary);
 }
 
@@ -60,7 +62,7 @@ html{
   padding: 40px 20px 20px;
 }
 
-.prysmImage img{
+.prysmImage img {
   max-width: 420px;
   width: 100%;
   height: auto;
@@ -92,7 +94,7 @@ html{
   display: flex;
 }
 
-.prysm{
+.prysm {
   flex: 1;
   min-height: 100%;
   display: flex;
@@ -147,4 +149,9 @@ html{
 
 .page:not(.faqPage) {
   overflow: hidden;
+}
+
+.btn-container {
+  display: flex;
+  gap: 5px;
 }

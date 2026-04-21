@@ -1,6 +1,6 @@
-export async function sendChatQuestion(question: string): Promise<string> {
+export async function login(formData: object): Promise<string> {
   try {
-    const route = import.meta.env.VITE_BACKEND_API_ROUTE!;
+    const route = import.meta.env.VITE_BACKEND_API_ROUTE_AUTH! + "login";
     if (!route) {
       throw new Error("Route not found");
     }
@@ -10,7 +10,8 @@ export async function sendChatQuestion(question: string): Promise<string> {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question }),
+      credentials: "include",
+      body: JSON.stringify(formData),
     });
 
     if (!response.ok) {
@@ -18,9 +19,9 @@ export async function sendChatQuestion(question: string): Promise<string> {
     }
 
     const data = await response.json();
-    return data.answer;
+    return data.message;
   } catch (error) {
-    console.error("Question failed to send: ", error);
+    console.error("Failed to login: ", error);
     throw error;
   }
 }

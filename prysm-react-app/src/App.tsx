@@ -1,68 +1,27 @@
-import { Routes, Route, Link } from "react-router-dom"
-import Chatbot from "./components/Chatbot"
-import FAQ from "./components/FAQ"
-import "./App.css"
-import prysmBg from "./assets/prysmIobg.png"
+import { Routes, Route } from "react-router-dom";
+import Admin from "./pages/Admin";
+import Home from "./pages/Home";
+import Faq from "./pages/Faq";
+import PageNotFound from "./components/PageNotFound";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import "./App.css";
 
 export default function App() {
   return (
     <Routes>
-      {/* Home Page */}
-      <Route
-        path="/"
-        element={
-          <div className="page">
-            {/* Header */}
-            <header className="navbar">
-            <div className="brand">
-                <span className="logoText">
-                  NU SKIN<sup>®</sup>
-                </span>
-            </div>
+      {/*Public Routes*/}
+      <Route path="/login" element={<Login />} />
 
-            {/* Button linking to FAQ Page */}
-            <Link to="/faq">
-              <button className="navButton">Go to FAQ</button>
-            </Link>
-          </header>
-          
-        {/* Main Content */}
-            <main className="content">
-              <section className="prysm"
-              style={{ backgroundImage: `url(${prysmBg})` }}
-              >
-                <div className="prysmOverlay">
-                  <h1>Ask Prysm iO</h1>
-                  <h2>Your next AI health Assistant.</h2>
+      {/*Protected Routes*/}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/admin" element={<Admin />} />
+      </Route>
 
-                  <div className="chatWrapper">
-                    <Chatbot />
-                  </div>
-                </div>
-              </section>
-            </main>
-          </div>
-        }
-      />
-          
-      {/* FAQ Page */}
-      <Route
-        path="/faq"
-        element={
-          <div className="faqPage">
-            <header className="navbar">
-            <h1 className="title">FAQ Page</h1>
-            <Link to="/">
-              <button className="navButton">Home</button>
-            </Link>
-          </header>
-
-          <main className="content">
-            <FAQ/>
-            </main>
-          </div>
-        }
-      />
+      {/* Catch-all for 404s */}
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
-  )
+  );
 }
