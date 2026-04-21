@@ -7,7 +7,15 @@ import "../styles/login.css";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const [error, setError] = useState({
+    username: "",
+    password: "",
+    server: ""
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const { loginUser } = useAuth();
