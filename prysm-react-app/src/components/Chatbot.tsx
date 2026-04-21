@@ -14,9 +14,6 @@ export default function Chatbot(){
 
         if (!question.trim()) return
 
-        // mocked chat
-        // setChat(prev => [...prev, "You: " + question, "PrysmIO Chatbot: It's best to use your index finger for the scan."])
-
         setChat(prev => [...prev, {content: question, role: "user"}]);
 
         try {
