@@ -76,14 +76,14 @@ const Login = () => {
         </div>
 
         <form className="loginForm" onSubmit={handleSubmit}>
-          {error && <div className="errorMessage">{error.server}</div>}
+          {error.server && (<div className="errorMessage">{error.server}</div>)}
 
           <div className="inputGroup">
             <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
-              className={error ? "inputError" : ""}
+              className={error.username ? "inputError" : ""}
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
