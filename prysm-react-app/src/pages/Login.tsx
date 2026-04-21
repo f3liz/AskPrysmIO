@@ -20,17 +20,50 @@ const Login = () => {
   const navigate = useNavigate();
   const { loginUser } = useAuth();
 
+  const validate = () => {
+    const newError = {
+      username: "",
+      password: "",
+      server: ""
+    };
+    
+    let valid = true;
+
+    if (!username.trim()) {
+      newError.username = "Username is required!";
+      valid = false;
+    }
+
+    if (!password.trim()) {
+      newError.password = "Password is required!";
+      valid = false;
+    }
+
+    setError(newError);
+    return valid;
+  }
+
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
+
+    setError((prev) => ({...prev, server: ""}));
+
+    if (!validate()) return;
 
     try {
+      setIsSubmitting(true);
+
       await submitLogin({ username, password });
       loginUser();
       navigate("/");
     } catch (err) {
-      setError("Invalid username or password. Please try again.");
+      setError((prev) => ({
+        ...prev,
+        server: "Invalid username or password"
+      }));
       console.error("Login failed.", err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -43,7 +76,7 @@ const Login = () => {
         </div>
 
         <form className="loginForm" onSubmit={handleSubmit}>
-          {error && <div className="errorMessage">{error}</div>}
+          {error && <div className="errorMessage">{error.server}</div>}
 
           <div className="inputGroup">
             <label htmlFor="username">Username</label>
@@ -54,9 +87,12 @@ const Login = () => {
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
-                setError("");
+                setError((prev) => ({...prev, username: "", server: ""}));
               }}
             />
+            {error.username && (
+              <span className="fieldError">{error.username}</span>
+            )}
           </div>
 
           <div className="inputGroup">
@@ -68,9 +104,12 @@ const Login = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setError("");
+                setError((prev) => ({...prev, password: "", server: ""}));
               }}
             />
+            {error.password && (
+              <span className="fieldError">{error.password}</span>
+            )}
           </div>
 
           <button type="submit" className="submitButton">
