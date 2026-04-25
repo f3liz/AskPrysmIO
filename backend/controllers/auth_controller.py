@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status, Request, Response
 from jose import JWTError, jwt
 from dotenv import load_dotenv
+from pydantic import BaseModel
 
 load_dotenv()
 
@@ -15,6 +16,10 @@ ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 pre_hashed_admin_pwd = hashlib.sha256(ADMIN_PASSWORD_PLAIN.encode('utf-8')).hexdigest().encode('utf-8')
 ADMIN_PASSWORD_HASH = bcrypt.hashpw(pre_hashed_admin_pwd, bcrypt.gensalt())
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 def create_refresh_token(data: dict):
     expires = timedelta(days=ACCESS_TOKEN_EXPIRE)
@@ -78,7 +83,7 @@ def refresh_logic(request: Request, response: Response):
             value=new_access_token,
             httponly=True,
             secure=False,
-            samesite="lax",
+            samesite="none",
             max_age=ACCESS_TOKEN_EXPIRE * 60
         )
 
@@ -89,18 +94,18 @@ def refresh_logic(request: Request, response: Response):
             detail="Error refreshing token."
         )
 
-def process_login(username: str, password: str, response: Response):
-    if username != ADMIN_USER or not verify_password(password, ADMIN_PASSWORD_HASH):
+def process_login(body: LoginRequest, response: Response):
+    if body.username != ADMIN_USER or not verify_password(body.password, ADMIN_PASSWORD_HASH):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
         )
 
     access_token = create_access_token(
-        data={"sub": username}
+        data={"sub": body.username}
     )
     refresh_token = create_refresh_token(
-        data={"sub":username}
+        data={"sub": body.username}
     )
 
     response.set_cookie(
@@ -109,6 +114,7 @@ def process_login(username: str, password: str, response: Response):
         httponly=True,
         secure=False,
         samesite="lax",
+        path="/",
         max_age=ACCESS_TOKEN_EXPIRE * 60
     )
 
@@ -116,8 +122,10 @@ def process_login(username: str, password: str, response: Response):
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        path="/refresh",
-        max_age=7 * 24 * 60 * 60 # 7 days
+        secure=False,
+        samesite="lax",
+        path="/auth/refresh",
+        max_age=7 * 24 * 60 * 60,
     )
     return {"message": "Login successful"}
 

@@ -10,7 +10,7 @@ class LoginRequest(BaseModel):
 
 @router.post("/login")
 def login(request: LoginRequest, response: Response):
-    return process_login(request.username, request.password, response)
+    return process_login(request, response)
 
 @router.post("/logout")
 def logout(response: Response):
