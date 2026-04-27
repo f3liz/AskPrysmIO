@@ -18,7 +18,6 @@
   gap: 12px;
 }
 
-/* message alignment */
 .message {
   display: flex;
   animation: fadeIn 0.25s ease;
@@ -32,7 +31,6 @@
   justify-content: flex-start;
 }
 
-/* bubble styling */
 .bubble {
   max-width: 75%;
   padding: 12px 14px;
@@ -42,21 +40,18 @@
   position: relative;
 }
 
-/* user bubble */
 .message.user .bubble {
   background: var(--primary);
   color: white;
   border-bottom-right-radius: 4px;
 }
 
-/* bot bubble */
 .message.assistant .bubble {
   background: rgba(255, 255, 255, 0.15);
   color: white;
   border-bottom-left-radius: 4px;
 }
 
-/* timestamp */
 .timestamp {
   display: block;
   font-size: 11px;
@@ -65,7 +60,6 @@
   text-align: right;
 }
 
-/* typing indicator */
 .message.typing {
   gap: 4px;
 }
@@ -92,7 +86,6 @@
   100% { opacity: 0.2; }
 }
 
-/* input */
 .chatbot-input {
   display: flex;
   border-top: 1px solid rgba(255,255,255,0.2);
@@ -113,7 +106,6 @@
   cursor: pointer;
 }
 
-/* animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -125,7 +117,6 @@
   }
 }
 
-/* mobile */
 @media (max-width: 600px) {
   .chat-container {
     height: 100%;
