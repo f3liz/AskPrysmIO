@@ -68,7 +68,7 @@ export default function Chatbot() {
             timestamp={message.timestamp}
           />
         ))}
-
+        {/* Shows the typing indicator */}
         {isTyping && (
           <div className="message assistant typing">
             <span></span>
