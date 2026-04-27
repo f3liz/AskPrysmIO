@@ -1,4 +1,7 @@
+import logging
 from db import supabase
+
+logger = logging.getLogger("uvicorn.error")
 
 def check_supabase_connection():
     try:
@@ -7,8 +10,10 @@ def check_supabase_connection():
             "Status": "Connected to Supabase",
             "Rows" : len(response.data)
         }
-    except Exception as e:
+    except Exception:
+        logger.exception("Supabase connection check failed")
+
         return {
-            "Status" : "error",
-            "Error" : str(e)
+            "Status": "error",
+            "Error": "Unable to verify database connection."
         }

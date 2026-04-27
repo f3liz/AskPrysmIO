@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: str
     ALGORITHM : str
     SECRET_KEY: str
+    MAX_FILE_SIZE: int = 20971520
     class Config:
         env_file = ".env"
 
