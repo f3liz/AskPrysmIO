@@ -17,3 +17,8 @@ def check_supabase_connection():
             "Status": "error",
             "Error": "Unable to verify database connection."
         }
+
+def check_auth_connection():
+    return {
+        "message": "Successfully authenticated!"
+    }
