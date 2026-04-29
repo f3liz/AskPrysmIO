@@ -1,63 +1,99 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react";
 import ChatBubble from "./ChatBubble";
-import type { Message } from '../types'
-import '../styles/chatbot.css'
+import type { Message } from "../types";
+import "../styles/chatbot.css";
 import { sendChatQuestion } from "../api/chat";
 
-export default function Chatbot(){
-    const [question, setQuestion] = useState("");
-    const [chat, setChat] = useState<Message[]>([])
-    const [isLoading, setIsLoading] = useState(false);
+export default function Chatbot() {
+  const [question, setQuestion] = useState("");
+  const [chat, setChat] = useState<Message[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
 
-    async function handleSubmit(e: React.SubmitEvent) {
-        e.preventDefault()
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
-        if (!question.trim()) return
+  // scrolling
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat, isTyping]);
 
-        setChat(prev => [...prev, {content: question, role: "user"}]);
-        setQuestion(""); 
-        
-        setIsLoading(true);
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
 
-        try {
-            const answer = await sendChatQuestion(question);
-            setChat(prev => [...prev, {content: answer, role: "assistant"}]);
-        } catch(error) {
-            setChat(prev => [...prev, {content: "Unable to answer question", role: "assistant"}]);
-            console.log(error)
-        } finally {
-            setIsLoading(false);
-        }
+    // prevent sending 
+    if (!question.trim() || isTyping) return;
+
+    const userMessage: Message = {
+      content: question,
+      role: "user",
+      timestamp: Date.now(),
+    };
+
+    setChat((prev) => [...prev, userMessage]);
+    setQuestion("");
+    setIsTyping(true);
+
+    try {
+      const answer = await sendChatQuestion(question);
+
+      const botMessage: Message = {
+        content: answer,
+        role: "assistant",
+        timestamp: Date.now(),
+      };
+
+      setChat((prev) => [...prev, botMessage]);
+    } catch (error) {
+      setChat((prev) => [
+        ...prev,
+        {
+          content: "Unable to answer question",
+          role: "assistant",
+          timestamp: Date.now(),
+        },
+      ]);
+      console.log(error);
+    } finally {
+      setIsTyping(false);
     }
+  }
 
-    return(
-        <div className="chat-container">
-            <div className="chat-messages">
-                {chat.map((message, index) => (
-                    <ChatBubble key={index} content={message.content} role={message.role} />
-                ))}
-                
-                {isLoading && (
-                    <div className="message assistant">
-                        <div className="typing-indicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                )}
-            </div>
-            <form className="chatbot-input" onSubmit={handleSubmit}>
-                <input 
-                    className="input-area" 
-                    placeholder="Type your message..." 
-                    type="text" 
-                    value={question} 
-                    onChange={(e) => setQuestion(e.target.value)}
-                    disabled={isLoading}
-                />
-                <button type="submit" disabled={isLoading}>Send</button>
-            </form>
-        </div>
-    )
+  return (
+    <div className="chat-container">
+      <div className="chat-messages">
+        {chat.map((message, index) => (
+          <ChatBubble
+            key={index}
+            content={message.content}
+            role={message.role}
+            timestamp={message.timestamp}
+          />
+        ))}
+        {/* Shows the typing indicator */}
+        {isTyping && (
+          <div className="message assistant typing">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
+
+        <div ref={bottomRef} />
+      </div>
+
+      <form className="chatbot-input" onSubmit={handleSubmit}>
+        <input
+          className="input-area"
+          placeholder="Type your message..."
+          type="text"
+          value={question}
+          disabled={isTyping}
+          onChange={(e) => setQuestion(e.target.value)}
+        />
+
+        <button type="submit" disabled={isTyping}>
+          {isTyping ? "..." : "Send"}
+        </button>
+      </form>
+    </div>
+  );
 }
