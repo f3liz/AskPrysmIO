@@ -1,19 +1,11 @@
+import { api } from "./api";
+
 export async function sendEmbeddings(formData: FormData) {
   try {
-    const route = import.meta.env.VITE_BACKEND_API_ROUTE_EMBEDDINGS;
-    if (!route) throw new Error("Route not found");
-
-    const response = await fetch(route, {
-      method: "POST",
-      body: formData,
+    const response = await api.post("/embeddings/", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
-
-    if (!response.ok) {
-      throw new Error(`Error with backend: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
+    return response.data;
   } catch (error) {
     console.error("PDF failed to upload: ", error);
     throw error;

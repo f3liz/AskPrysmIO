@@ -41,6 +41,9 @@ async def validate_pdf_upload(file: UploadFile):
 
     await file.seek(0)
 
+from fastapi import UploadFile, File, HTTPException, Form
+from backend.utils import  pdf_util, chunk_util, embedding_util
+from backend.db import supabase
 
 async def embeddings_process(file: UploadFile = File(), title: str = None):
     await validate_pdf_upload(file)

@@ -1,5 +1,6 @@
 import logging
 from db import supabase
+from backend.db import supabase
 
 logger = logging.getLogger("uvicorn.error")
 
