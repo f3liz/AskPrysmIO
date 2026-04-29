@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
       } catch (err) {
         setIsAuthenticated(false);
-
+        console.log(err)
         navigate('/login', {replace: true});
       }  finally {
         setLoading(false);
