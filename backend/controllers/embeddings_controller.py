@@ -1,9 +1,9 @@
 import logging
 import magic
 from fastapi import UploadFile, File, HTTPException
-from utils import pdf_util, chunk_util, embedding_util
+from backend.utils import pdf_util, chunk_util, embedding_util
 from backend.db import supabase
-from config import settings
+from backend.config import settings
 
 logger = logging.getLogger("uvicorn.error")
 
