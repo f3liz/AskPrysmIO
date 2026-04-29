@@ -1,6 +1,6 @@
 from fastapi import UploadFile, File, HTTPException, Form
-from utils import  pdf_util, chunk_util, embedding_util
-from db import supabase
+from backend.utils import  pdf_util, chunk_util, embedding_util
+from backend.db import supabase
 
 async def embeddings_process(file: UploadFile = File(), title: str = None):
     if not file.filename.endswith(".pdf"):
