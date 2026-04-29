@@ -7,22 +7,63 @@ import "../styles/login.css";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const [error, setError] = useState({
+    username: "",
+    password: "",
+    server: ""
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const { loginUser } = useAuth();
 
+  const validate = () => {
+    const newError = {
+      username: "",
+      password: "",
+      server: ""
+    };
+    
+    let valid = true;
+
+    if (!username.trim()) {
+      newError.username = "Username is required!";
+      valid = false;
+    }
+
+    if (!password.trim()) {
+      newError.password = "Password is required!";
+      valid = false;
+    }
+
+    setError(newError);
+    return valid;
+  }
+
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
+
+    setError((prev) => ({...prev, server: ""}));
+
+    if (!validate()) return;
 
     try {
+      setIsSubmitting(true);
+
       await submitLogin({ username, password });
       loginUser();
       navigate("/");
     } catch (err) {
-      setError("Invalid username or password. Please try again.");
+      setError((prev) => ({
+        ...prev,
+        server: "Invalid username or password"
+      }));
       console.error("Login failed.", err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -35,38 +76,50 @@ const Login = () => {
         </div>
 
         <form className="loginForm" onSubmit={handleSubmit}>
-          {error && <div className="errorMessage">{error}</div>}
+          {error.server && (<div className="errorMessage">{error.server}</div>)}
 
           <div className="inputGroup">
             <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
-              className={error ? "inputError" : ""}
+              className={error.username ? "inputError" : ""}
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
-                setError("");
+                setError((prev) => ({...prev, username: "", server: ""}));
               }}
             />
+            {error.username && (
+              <span className="fieldError">{error.username}</span>
+            )}
           </div>
 
           <div className="inputGroup">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              className={error ? "inputError" : ""}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError("");
-              }}
-            />
+
+            <div className="passwordWrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className={error.password ? "inputError" : ""}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError((prev) => ({...prev, password: "", server: ""}));
+                }}
+              />
+
+              <button type = "button" className="togglePassword" onClick={() => setShowPassword((prev) => !prev)}
+              >{showPassword ? "Hide" : "Show"}</button>
+            </div>
+            {error.password && (
+              <span className="fieldError">{error.password}</span>
+            )}
           </div>
 
-          <button type="submit" className="submitButton">
-            Log In
+          <button type="submit" className="submitButton" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Log in"}
           </button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-from utils import question_retrieval_util, prompting_util, llm_util
+from backend.utils import question_retrieval_util, prompting_util, llm_util
 
 MAX_CHARS_CONTEXT = 4000
 

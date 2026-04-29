@@ -1,27 +1,20 @@
+import { api } from "./api";
+
 export async function login(formData: object): Promise<string> {
   try {
-    const route = import.meta.env.VITE_BACKEND_API_ROUTE_AUTH! + "login";
-    if (!route) {
-      throw new Error("Route not found");
-    }
-
-    const response = await fetch(route, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error with backend: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.message;
+    const response = await api.post("/auth/login", formData);
+    return response.data.message;
   } catch (error) {
     console.error("Failed to login: ", error);
     throw error;
+  }
+}
+
+export async function refreshAccessToken(): Promise<boolean> {
+  try {
+    await api.get("/auth/refresh");
+    return true;
+  } catch {
+    return false;
   }
 }
