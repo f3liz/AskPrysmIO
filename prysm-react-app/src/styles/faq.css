@@ -13,7 +13,6 @@
 
 .faqPage {
   background: var(--bg-dark);
-  min-height: 100vh;
   font-family: 'Inter', system-ui, sans-serif;
   color: white;
 }
