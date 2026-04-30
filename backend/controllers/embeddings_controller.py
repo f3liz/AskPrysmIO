@@ -1,5 +1,4 @@
 import logging
-import magic
 from fastapi import UploadFile, File, HTTPException
 from backend.utils import pdf_util, chunk_util, embedding_util
 from backend.db import supabase
@@ -17,12 +16,8 @@ async def validate_pdf_upload(file: UploadFile):
 
     first_chunk = await file.read(2048)
 
-    mime_type = magic.from_buffer(first_chunk, mime=True)
-    if mime_type != "application/pdf":
-        raise HTTPException(
-            status_code=415,
-            detail="Invalid file type. Only PDF files are allowed."
-        )
+    if not file.filename.endswith(".pdf"):
+    raise HTTPException(status_code=415, detail="Only PDF files are allowed")
 
     total_size = len(first_chunk)
 
