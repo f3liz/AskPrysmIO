@@ -17,7 +17,7 @@ async def validate_pdf_upload(file: UploadFile):
     first_chunk = await file.read(2048)
 
     if not file.filename.endswith(".pdf"):
-    raise HTTPException(status_code=415, detail="Only PDF files are allowed")
+        raise HTTPException(status_code=415, detail="Only PDF files are allowed")
 
     total_size = len(first_chunk)
 
