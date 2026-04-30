@@ -21,4 +21,5 @@ python -m pip install -r requirements.txt
 
 :: 4. Start the backend
 echo [4/4] Starting FastAPI server...
-uvicorn main:app --reload
+cd ..
+uvicorn backend.main:app --reload

@@ -44,7 +44,6 @@ html, body, #root {
 .btn-container {
   display: flex;
   height: 100%;
-  gap: 5px;
 }
 
 .nav-item {
