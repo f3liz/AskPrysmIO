@@ -1,6 +1,4 @@
-import os
 import logging
-import traceback
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,12 +14,16 @@ logger = logging.getLogger("uvicorn.error")
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    logger.error(f"Unhandled exception on {request.method} {request.url.path}: {exc}")
-    logger.error(traceback.format_exc())
+    logger.error(
+    f"Unhandled exception on {request.method} {request.url.path}",
+    exc_info=True
+    )
 
     return JSONResponse(
         status_code=500,
-        content={"detail": "An unexpected error occurred. Please try again later."}
+        content={
+            "detail": "An unexpected error occurred. Please try again later."
+            }
     )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

@@ -1,4 +1,5 @@
 import os
+import logging
 import hashlib
 import bcrypt
 from datetime import datetime, timedelta, timezone
@@ -8,6 +9,8 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 
 load_dotenv()
+
+logger = logging.getLogger("uvicorn.error")
 
 ADMIN_USER = os.getenv("ADMIN_USER")
 ADMIN_PASSWORD_PLAIN = os.getenv("ADMIN_PASSWORD")

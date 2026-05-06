@@ -1,9 +1,9 @@
 import logging
-import magic
 from fastapi import UploadFile, File, HTTPException
-from utils import pdf_util, chunk_util, embedding_util
-from db import supabase
-from config import settings
+
+from backend.utils import pdf_util, chunk_util, embedding_util
+from backend.db import supabase
+from backend.config import settings
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -15,19 +15,11 @@ async def validate_pdf_upload(file: UploadFile):
             detail="Invalid file type. Only PDF files are allowed."
         )
 
-    first_chunk = await file.read(2048)
-
-    mime_type = magic.from_buffer(first_chunk, mime=True)
-    if mime_type != "application/pdf":
-        raise HTTPException(
-            status_code=415,
-            detail="Invalid file type. Only PDF files are allowed."
-        )
-
-    total_size = len(first_chunk)
+    total_size = 0
 
     while True:
         chunk = await file.read(1024 * 1024)
+
         if not chunk:
             break
 
@@ -41,11 +33,8 @@ async def validate_pdf_upload(file: UploadFile):
 
     await file.seek(0)
 
-from fastapi import UploadFile, File, HTTPException, Form
-from backend.utils import  pdf_util, chunk_util, embedding_util
-from backend.db import supabase
 
-async def embeddings_process(file: UploadFile = File(), title: str = None):
+async def embeddings_process(file: UploadFile = File(...), title: str = None):
     await validate_pdf_upload(file)
 
     try:
@@ -79,9 +68,14 @@ async def embeddings_process(file: UploadFile = File(), title: str = None):
 
     except HTTPException:
         raise
+
     except Exception:
-        logger.exception("PDF embedding process failed")
+        logger.error(
+            f"PDF embedding process failed for file={file.filename}, title={title}",
+            exc_info=True
+        )
+
         raise HTTPException(
             status_code=500,
-            detail="Failed to process PDF."
+            detail="Failed to process PDF. Please try again later."
         )
