@@ -1,14 +1,10 @@
-import os
 import logging
 import traceback
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
-from dotenv import load_dotenv
 from backend.routers import chats, check, embeddings, auth
-
-load_dotenv()
 
 app = FastAPI()
 
