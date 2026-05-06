@@ -1,19 +1,18 @@
-import os
 import hashlib
 import bcrypt
 from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status, Request, Response
 from jose import JWTError, jwt
-from dotenv import load_dotenv
 from pydantic import BaseModel
 
-load_dotenv()
+from backend.config import settings
 
-ADMIN_USER = os.getenv("ADMIN_USER")
-ADMIN_PASSWORD_PLAIN = os.getenv("ADMIN_PASSWORD")
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
+ADMIN_USER = settings.ADMIN_USER
+ADMIN_PASSWORD_PLAIN = settings.ADMIN_PASSWORD
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_EXPIRE = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+
 pre_hashed_admin_pwd = hashlib.sha256(ADMIN_PASSWORD_PLAIN.encode('utf-8')).hexdigest().encode('utf-8')
 ADMIN_PASSWORD_HASH = bcrypt.hashpw(pre_hashed_admin_pwd, bcrypt.gensalt())
 
@@ -51,7 +50,6 @@ def verify_password(plain_password: str, hashed_password: bytes):
 
     pre_hashed_attempt = hashlib.sha256(plain_password.encode('utf-8')).hexdigest().encode('utf-8')
     
-
     if isinstance(hashed_password, str):
         hashed_password = hashed_password.encode('utf-8')
         
@@ -61,10 +59,12 @@ def create_token(data: dict, expires_delta: timedelta, token_type: str):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + expires_delta
     to_encode.update({"exp": expire, "type": token_type})
+
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 def refresh_logic(request: Request, response: Response):
     refresh_token = request.cookies.get("refresh_token")
+
     if not refresh_token:
         raise HTTPException(status_code=401, detail="Refresh token missing")
 
@@ -88,6 +88,7 @@ def refresh_logic(request: Request, response: Response):
         )
 
         return {"message": "Token refreshed"}
+    
     except JWTError:
         raise HTTPException(
             status_code=401,
