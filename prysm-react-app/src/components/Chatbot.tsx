@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import ChatBubble from "./ChatBubble";
 import type { Message } from "../types";
 import "../styles/chatbot.css";
@@ -26,6 +27,7 @@ export default function Chatbot() {
       content: question,
       role: "user",
       timestamp: Date.now(),
+      id: uuidv4()
     };
 
     setChat((prev) => [...prev, userMessage]);
@@ -39,6 +41,7 @@ export default function Chatbot() {
         content: answer,
         role: "assistant",
         timestamp: Date.now(),
+        id: uuidv4()
       };
 
       setChat((prev) => [...prev, botMessage]);
@@ -49,6 +52,7 @@ export default function Chatbot() {
           content: "Unable to answer question",
           role: "assistant",
           timestamp: Date.now(),
+          id: uuidv4()
         },
       ]);
       console.log(error);
@@ -60,12 +64,13 @@ export default function Chatbot() {
   return (
     <div className="chat-container">
       <div className="chat-messages">
-        {chat.map((message, index) => (
+        {chat.map((message) => (
           <ChatBubble
-            key={index}
+            key={message.id}
             content={message.content}
             role={message.role}
             timestamp={message.timestamp}
+            id={message.id}
           />
         ))}
         {/* Shows the typing indicator */}
