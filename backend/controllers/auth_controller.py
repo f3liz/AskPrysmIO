@@ -132,4 +132,3 @@ def process_login(body: LoginRequest, response: Response):
 def process_logout(response: Response):
     response.delete_cookie(key="access_token")
     return {"message": "Logged out successfully"}
-
