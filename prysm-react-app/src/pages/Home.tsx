@@ -1,26 +1,9 @@
 import Chatbot from "../components/Chatbot";
 import prysmBg from "../assets/prysmIobg.png";
-import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="page">
-      <header className="navbar">
-        <div className="brand">
-          <span className="logoText">
-            NU SKIN<sup>®</sup>
-          </span>
-        </div>
-
-        <div className="btn-container">
-          <Link to="/faq">
-            <button className="navButton">Go to FAQ</button>
-          </Link>
-          <Link to="/admin">
-            <button className="navButton">File Upload</button>
-          </Link>
-        </div>
-      </header>
+    <div className="page"> 
 
       <main className="content">
         <section

@@ -1,4 +1,4 @@
-from db import supabase
+from backend.db import supabase
 from .embedding_util import question_embedding
 import re
 
