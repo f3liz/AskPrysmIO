@@ -3,6 +3,7 @@ import ChatBubble from "./ChatBubble";
 import type { Message } from "../types";
 import "../styles/chatbot.css";
 import { sendChatQuestion } from "../api/chat";
+import { sanitizeMessage } from "../utils/sanitize";
 
 export default function Chatbot() {
   const [question, setQuestion] = useState("");
@@ -63,7 +64,7 @@ export default function Chatbot() {
         {chat.map((message, index) => (
           <ChatBubble
             key={index}
-            content={message.content}
+            content={sanitizeMessage(message.content)}
             role={message.role}
             timestamp={message.timestamp}
           />
