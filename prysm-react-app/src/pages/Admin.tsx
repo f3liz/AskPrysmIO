@@ -105,21 +105,20 @@ function Admin() {
               }}
             />
           </div>
+          {uploadRes && (
+            <div className={`admin-status-message ${getStatusClass()}`}>
+              {isUploading && <div className="admin-spinner"></div>}
+              {uploadRes}
+            </div>
+          )}
           <button
             type="submit"
             className="admin-submit-btn"
             onClick={handleSubmit}
             disabled={isUploading}
           >
-            {isUploading ? "Uploading..." : "Upload Document"}
+            {"Upload Document"}
           </button>
-
-          {uploadRes && (
-            <div className={`admin-status-message ${getStatusClass()}`}>
-              {isUploading && <div className="admin-spinner" />}
-              {uploadRes}
-            </div>
-          )}
         </form>
       </div>
     </div>
