@@ -1,0 +1,201 @@
+/*
+========================================
+PrysmIO Design Tokens
+----------------------------------------
+Naming Convention:
+--color-*      → colors
+--space-*      → spacing scale
+--font-*       → typography
+--radius-*     → border radius
+--shadow-*     → box shadows
+--transition-* → animation timing
+--opacity-*    → opacity values
+========================================
+*/
+
+:root {
+  /* COLORS */
+  --color-primary: #c6ff00;
+  --color-primary-hover: #d4ff33;
+
+  --color-bg-dark: #0b0f13;
+  --color-background: #050816;
+
+  --color-surface: rgba(20, 20, 20, 0.85);
+  --color-surface-dark: #161b22;
+
+  --color-text: #ffffff;
+  --color-text-main: #f8fafc;
+  --color-text-muted: #a0a0a0;
+  --color-text-dim: #64748b;
+  --color-text-secondary: #94a3b8;
+  --color-text-soft: #f1f5f9;
+
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.2);
+  --color-border-hover: rgba(255, 255, 255, 0.6);
+
+  --color-input-bg: rgba(0, 0, 0, 0.25);
+  --color-input-bg-strong: rgba(0, 0, 0, 0.3);
+  --color-input-bg-focus: rgba(0, 0, 0, 0.4);
+
+  --color-accent-glow: #2dd4bf;
+  --color-accent-hover: #24b2a0;
+  --color-accent-border: rgba(45, 212, 191, 0.4);
+
+  --color-slate-border: #334155;
+  --color-slate-focus: #475569;
+
+  --color-success: green;
+  --color-info: blue;
+  --color-info-muted: rgba(0, 0, 255, 0.2);
+
+  --color-error: red;
+  --color-error-soft: #ff8787;
+  --color-error-bg: rgba(255, 107, 107, 0.05);
+  --color-error-message-bg: rgba(255, 135, 135, 0.1);
+  --color-error-message-border: rgba(255, 135, 135, 0.2);
+
+  --color-bubble-assistant: rgba(255, 255, 255, 0.15);
+
+  /* GRADIENTS */
+  --gradient-login-bg: radial-gradient(
+    circle at 0% 0%,
+    rgba(45, 212, 191, 0.05) 0%,
+    var(--color-bg-dark) 50%
+  );
+
+  /* SPACING */
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12-5: 50px;
+  --space-17-5: 70px;
+  --space-25: 100px;
+
+  /* TYPOGRAPHY */
+  --font-family-base: "Inter", system-ui, -apple-system, sans-serif;
+
+  --font-size-xxs: 0.75rem;
+  --font-size-xs: 0.8rem;
+  --font-size-label: 13px;
+  --font-size-chat: 14px;
+  --font-size-body-sm: 15px;
+  --font-size-sm: 0.95rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 28px;
+  --font-size-timestamp: 11px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+
+  --line-height-base: 1.5;
+  --line-height-chat: 1.4;
+  --line-height-loose: 1.7;
+
+  --letter-spacing-tight: -0.5px;
+  --letter-spacing-sm: 0.5px;
+  --letter-spacing-md: 1px;
+
+  /* RADIUS */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-input: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 30px;
+  --radius-full: 50%;
+
+  /* SHADOWS */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  --shadow-login: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  --shadow-accent: 0 8px 20px rgba(45, 212, 191, 0.15);
+
+  --shadow-accent-focus: 0 0 15px rgba(45, 212, 191, 0.15);
+
+  --shadow-accent-hover: 0 10px 20px rgba(45, 212, 191, 0.2);
+
+  --shadow-card-hover: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+  --shadow-input-focus: 0 0 0 2px rgba(0, 150, 120, 0.25);
+
+  --shadow-error-focus: 0 0 0 2px rgba(255, 107, 107, 0.2);
+
+  /* TRANSITIONS */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-quick: 0.1s;
+  --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fade: 0.25s ease;
+  --transition-fade-in: 0.4s ease-out;
+  --transition-slide: 0.3s ease-out;
+
+  /* OPACITY */
+  --opacity-none: 0;
+  --opacity-low: 0.2;
+  --opacity-muted: 0.6;
+  --opacity-disabled: 0.7;
+  --opacity-high: 0.9;
+  --opacity-full: 1;
+
+  /* EFFECTS */
+  --blur-sm: 8px;
+  --blur-md: 12px;
+  --brightness-hover: 1.1;
+
+  /* COMPONENT SIZES */
+  --admin-max-width: 480px;
+  --chat-height: 500px;
+  --chat-max-width: 600px;
+
+  --bubble-max-width: 75%;
+  --bubble-mobile-max-width: 90%;
+
+  --faq-max-width: 800px;
+  --search-max-width: 500px;
+
+  --login-max-width: 420px;
+
+  --width-page-content: 90%;
+  --width-mobile-content: 95%;
+
+  /* BORDERS */
+  --border-width-sm: 1px;
+  --border-width-md: 3px;
+
+  /* MOTION / TRANSFORMS */
+  --translate-hover-xs: -1px;
+  --translate-hover-sm: -2px;
+  --translate-up-sm: -10px;
+
+  --scale-press: 0.98;
+
+  --animation-blink: 1.4s;
+  --animation-delay-sm: 0.2s;
+  --animation-delay-md: 0.4s;
+  --animation-spin: 1s;
+
+  /* LAYERS */
+  --z-index-base: 2;
+}

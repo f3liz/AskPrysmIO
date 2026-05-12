@@ -1,179 +1,167 @@
-:root {
-  --bg-dark: #0b0f13;
-  --surface-dark: #161b22;
-  --accent-glow: #2dd4bf; 
-  --text-main: #f8fafc;
-  --text-dim: #64748b; /* Muted slate */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --input-bg: rgba(0, 0, 0, 0.25);
-}
-
 .admin-page {
-  background: var(--bg-dark);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--color-bg-dark);
+  font-family: var(--font-family-base);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: var(--space-5);
 }
 
 .admin-container {
   width: 100%;
-  max-width: 480px;
+  max-width: var(--admin-max-width);
 }
 
-/* --- Clean Dark Card --- */
 .admin-form {
-  background: var(--surface-dark);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  padding: 40px;
+  background: var(--color-surface-dark);
+  border: var(--border-width-sm) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10);
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  gap: var(--space-6);
+  box-shadow: var(--shadow-lg);
 }
 
 .admin-header h1 {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-main);
-  text-align: left; /* Alignment change for a more "pro" feel */
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-subtle);
-  letter-spacing: 0.5px;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-main);
+  text-align: left;
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-width-sm) solid var(--color-border-subtle);
+  letter-spacing: var(--letter-spacing-sm);
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
-/* Swapped teal labels for soft silver */
 .input-group label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-dim);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: var(--letter-spacing-sm);
 }
 
-/* --- Stealth Inputs --- */
 .admin-input {
-  padding: 12px 16px;
-  border: 1px solid var(--border-subtle);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width-sm) solid var(--color-border-subtle);
   outline: none;
-  font-size: 0.95rem;
-  border-radius: 8px;
-  color: white;
-  background: var(--input-bg);
-  transition: all 0.2s ease;
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-md);
+  color: var(--color-text-main);
+  background: var(--color-input-bg);
+  transition: all var(--transition-fast);
 }
 
 .admin-input:focus {
-  border-color: #475569; /* Neutral slate focus */
-  background: rgba(0, 0, 0, 0.4);
+  border-color: var(--color-slate-focus);
+  background: var(--color-input-bg-focus);
 }
 
 .admin-input::placeholder {
-  color: #475569;
+  color: var(--color-slate-focus);
 }
 
-/* --- Refined File Input --- */
 .admin-file-input {
-  padding: 8px;
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  background: var(--input-bg);
-  border-radius: 8px;
-  border: 1px dotted #334155;
+  padding: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+  background: var(--color-input-bg);
+  border-radius: var(--radius-md);
+  border: var(--border-width-sm) dotted var(--color-slate-border);
   cursor: pointer;
 }
 
-/* Neutralized file button */
 .admin-file-input::file-selector-button {
-  background: #334155;
-  color: #f1f5f9;
+  background: var(--color-slate-border);
+  color: var(--color-text-soft);
   border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.75rem;
-  transition: background 0.2s ease;
-  margin-right: 12px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xxs);
+  transition: background var(--transition-fast);
+  margin-right: var(--space-3);
 }
 
 .admin-file-input::file-selector-button:hover {
-  background: #475569;
+  background: var(--color-slate-focus);
 }
 
-/* --- Submit Button (Only Teal remains here) --- */
 .admin-submit-btn {
-  margin-top: 12px;
-  padding: 14px;
-  border-radius: 8px;
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
   border: none;
-  background: var(--accent-glow);
-  color: var(--bg-dark);
-  font-size: 0.95rem;
-  font-weight: 700;
+  background: var(--color-accent-glow);
+  color: var(--color-bg-dark);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-medium);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: var(--letter-spacing-md);
 }
 
 .admin-submit-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(45, 212, 191, 0.15);
+  filter: brightness(var(--brightness-hover));
+  transform: translateY(var(--translate-hover-xs));
+  box-shadow: var(--shadow-accent);
 }
 
 .admin-submit-btn:active {
-  transform: scale(0.98);
+  transform: scale(var(--scale-press));
 }
 
-
 .admin-submit-btn:disabled {
-  opacity: 0.7;
+  opacity: var(--opacity-disabled);
   cursor: not-allowed;
 }
 
 .admin-status-message {
-  margin-top: 15px;
+  margin-top: var(--space-4);
   text-align: center;
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .status-success {
-  color: green;
+  color: var(--color-success);
 }
 
 .status-uploading {
-  color: blue;
+  color: var(--color-info);
 }
 
 .status-error {
-  color: red;
+  color: var(--color-error);
 }
 
 .admin-spinner {
-  width: 16px;
-  height: 16px;
-  border: 3px solid rgba(0, 0, 255, 0.2);
-  border-top: 3px solid blue;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  width: var(--space-4);
+  height: var(--space-4);
+  border: var(--border-width-md) solid var(--color-info-muted);
+  border-top: var(--border-width-md) solid var(--color-info);
+  border-radius: var(--radius-full);
+  animation: spin var(--animation-spin) linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
