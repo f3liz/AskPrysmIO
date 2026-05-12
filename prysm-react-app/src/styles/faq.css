@@ -1,93 +1,105 @@
+:root {
+  --bg-dark: #0b0f13;
+  --surface-dark: #161b22;
+  --accent-glow: #2dd4bf;
+  --text-dim: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+}
+
+/* FAQ Layout Base */
 .faqPage .content {
   display: block;
 }
 
 .faqPage {
-  background: var(--color-bg-dark);
-  font-family: var(--font-family-base);
-  color: var(--color-text);
+  background: var(--bg-dark);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: white;
 }
 
 .faq-container {
-  padding-top: var(--space-25);
+  padding-top: 100px; /* Space for sticky navbar */
   box-sizing: border-box;
   overflow-y: auto;
-  padding-bottom: var(--space-10);
+  padding-bottom: 40px;
 }
 
 .faq-content {
-  width: var(--width-page-content);
+  width: 90%;
   margin: auto;
-  max-width: var(--faq-max-width);
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 16px;
   align-items: center;
 }
 
+/* --- Search Bar Upgrade --- */
 .search-form {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: var(--search-max-width);
-  margin: 0 auto var(--space-12-5) auto;
-  background: var(--color-surface-dark);
-  border: var(--border-width-sm) solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-medium);
+  max-width: 500px;
+  margin: 0 auto 50px auto;
+  background: var(--surface-dark);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
 .search-form:focus-within {
-  border-color: var(--color-accent-glow);
-  box-shadow: var(--shadow-accent-focus);
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 15px rgba(45, 212, 191, 0.15);
 }
 
 .search-input {
   flex: 1;
-  padding: var(--space-3-5) var(--space-5);
+  padding: 14px 20px;
   border: none;
   outline: none;
-  font-size: var(--font-size-md);
+  font-size: 1rem;
   background: transparent;
-  color: var(--color-text);
+  color: white;
 }
 
 .search-input::placeholder {
-  color: var(--color-text-secondary);
+  color: var(--text-dim);
 }
 
 .search-button {
   background: transparent;
-  color: var(--color-accent-glow);
+  color: var(--accent-glow);
   border: none;
-  padding: 0 var(--space-5);
+  padding: 0 20px;
   cursor: pointer;
-  font-weight: var(--font-weight-bold);
+  font-weight: bold;
 }
 
+/* --- Dark Accordion Cards --- */
 .accordion-item {
   width: 100%;
-  background: var(--color-surface-dark);
-  border: var(--border-width-sm) solid var(--color-border);
-  border-radius: var(--radius-md);
+  background: var(--surface-dark);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
   overflow: hidden;
-  transition: all var(--transition-fast);
+  transition: all 0.2s ease;
 }
 
 .accordion-item:hover {
-  border-color: var(--color-accent-border);
-  transform: translateY(var(--translate-hover-sm));
-  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(45, 212, 191, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Question Section */
 .accord-title {
   width: 100%;
   text-align: left;
-  padding: var(--space-5) var(--space-6);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
+  padding: 20px 24px;
+  font-size: 1rem;
+  font-weight: 600;
   background: transparent;
-  color: var(--color-text);
+  color: white;
   border: none;
   cursor: pointer;
   display: flex;
@@ -96,31 +108,32 @@
 }
 
 .accord-title:hover {
-  color: var(--color-accent-glow);
+  color: var(--accent-glow);
 }
 
+/* Answer Section */
 .accordion-content {
-  padding: 0 var(--space-6) var(--space-5) var(--space-6);
+  padding: 0 24px 20px 24px; /* Integrated padding */
   background: transparent;
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-loose);
-  color: var(--color-text-secondary);
-  border-top: none;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  border-top: none; /* Removed harsh line */
 }
 
+/* --- Utilities --- */
 .no-results {
-  color: var(--color-text-secondary);
+  color: var(--text-dim);
   text-align: center;
-  margin-top: var(--space-5);
+  margin-top: 20px;
   font-style: italic;
 }
 
 @media (max-width: 768px) {
   .search-form {
-    width: var(--width-page-content);
+    width: 90%;
   }
-
   .faq-content {
-    width: var(--width-mobile-content);
+    width: 95%;
   }
 }
