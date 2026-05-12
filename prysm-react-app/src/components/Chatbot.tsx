@@ -108,10 +108,8 @@ export default function Chatbot() {
       <div className="chat-messages">
         {chat.map((message) => (
           <ChatBubble
-            key={index}
             content={sanitizeMessage(message.content)}
             key={message.id}
-            content={message.content}
             role={message.role}
             timestamp={message.timestamp}
             id={message.id}
