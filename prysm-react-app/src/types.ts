@@ -2,6 +2,7 @@ export type Message = {
   content: string;
   role: "user" | "assistant";
   timestamp: number;
+  id: string
 }
 
 type FAQ = {

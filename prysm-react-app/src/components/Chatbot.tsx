@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import ChatBubble from "./ChatBubble";
 import type { Message } from "../types";
 import "../styles/chatbot.css";
@@ -20,13 +21,15 @@ export default function Chatbot() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // prevent sending 
     if (!question.trim() || isTyping) return;
 
+    const currentQuestion = question;
+
     const userMessage: Message = {
-      content: question,
+      content: currentQuestion,
       role: "user",
       timestamp: Date.now(),
+      id: uuidv4()
     };
 
     setChat((prev) => [...prev, userMessage]);
@@ -34,25 +37,67 @@ export default function Chatbot() {
     setIsTyping(true);
 
     try {
-      const answer = await sendChatQuestion(question);
+      const answer = await sendChatQuestion(currentQuestion);
 
       const botMessage: Message = {
         content: answer,
         role: "assistant",
         timestamp: Date.now(),
+        id: uuidv4()
       };
 
       setChat((prev) => [...prev, botMessage]);
-    } catch (error) {
+    } catch (error: unknown) {
+      console.error("Chat API Error:", error);
+
+      // Default fallback message
+      let errorMessage = "Unable to answer question";
+
+      if (typeof error === "object" && error !== null) {
+        const err = error as {
+          status?: number;
+          response?: {
+            status?: number;
+            data?: {
+              detail?: string;
+              error?: { type?: string; message?: string };
+            };
+          };
+          message?: string;
+        };
+
+        if (err.message?.includes("Network Error")) {
+          errorMessage =
+            "Unable to connect to the server. Please refresh the page or try again later.";
+        } else if (
+          err.status === 429 ||
+          err.response?.status === 429 ||
+          err.message?.includes("429")
+        ) {
+          errorMessage =
+            "Too many requests. Please wait a couple of seconds and try again.";
+        } else if (err.response?.status === 503 && err.response?.data?.detail) {
+          errorMessage = err.response.data.detail;
+        } else if (
+          err.response?.data?.error?.type === "insufficient_quota" ||
+          err.response?.data?.error?.message?.includes(
+            "exceeded your current quota",
+          )
+        ) {
+          errorMessage =
+            "Our AI is currently out of credits! Please try again later.";
+        }
+      }
+
       setChat((prev) => [
         ...prev,
         {
-          content: "Unable to answer question",
+          content: errorMessage,
           role: "assistant",
           timestamp: Date.now(),
+          id: uuidv4()
         },
       ]);
-      console.log(error);
     } finally {
       setIsTyping(false);
     }
@@ -61,12 +106,15 @@ export default function Chatbot() {
   return (
     <div className="chat-container">
       <div className="chat-messages">
-        {chat.map((message, index) => (
+        {chat.map((message) => (
           <ChatBubble
             key={index}
             content={sanitizeMessage(message.content)}
+            key={message.id}
+            content={message.content}
             role={message.role}
             timestamp={message.timestamp}
+            id={message.id}
           />
         ))}
         {/* Shows the typing indicator */}
