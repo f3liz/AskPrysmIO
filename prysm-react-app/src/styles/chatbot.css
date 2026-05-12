@@ -40,6 +40,13 @@
   position: relative;
 }
 
+.message.assistant .bubble {
+  background: var(--color-bubble-assistant);
+  color: var(--color-text);
+  border-bottom-left-radius: var(--radius-xs);
+  text-align: left;
+}
+
 .message.user .bubble {
   background: var(--color-primary);
   color: var(--color-text);
