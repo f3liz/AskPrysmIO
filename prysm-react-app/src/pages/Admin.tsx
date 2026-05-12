@@ -28,15 +28,34 @@ function Admin() {
       const res = await sendEmbeddings(formData);
       console.log(res);
       setUploadRes("Upload successful!");
-      
+
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
       setPdfFile(null);
       setPdfTitle("");
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
-      setUploadRes("Upload failed. Please try again.");
+
+      let errorMessage = "Upload failed. Please try again.";
+
+      if (typeof error === "object" && error !== null) {
+        const err = error as {
+          status?: number;
+          response?: { status?: number };
+          message?: string;
+        };
+
+        if (
+          err.status === 429 ||
+          err.response?.status === 429 ||
+          err.message?.includes("429")
+        ) {
+          errorMessage = "Too many request. Please try again shortly.";
+        }
+      }
+
+      setUploadRes(errorMessage);
     } finally {
       setIsUploading(false);
     }
@@ -86,21 +105,20 @@ function Admin() {
               }}
             />
           </div>
+          {uploadRes && (
+            <div className={`admin-status-message ${getStatusClass()}`}>
+              {isUploading && <div className="admin-spinner"></div>}
+              {uploadRes}
+            </div>
+          )}
           <button
             type="submit"
             className="admin-submit-btn"
             onClick={handleSubmit}
             disabled={isUploading}
           >
-            {isUploading ? "Uploading..." : "Upload Document"}
+            {"Upload Document"}
           </button>
-
-          {uploadRes && (
-            <div className={`admin-status-message ${getStatusClass()}`}>
-              {isUploading && <div className="admin-spinner" />}
-              {uploadRes}
-            </div>
-          )}
         </form>
       </div>
     </div>
