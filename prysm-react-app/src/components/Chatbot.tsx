@@ -4,7 +4,6 @@ import ChatBubble from "./ChatBubble";
 import type { Message } from "../types";
 import "../styles/chatbot.css";
 import { sendChatQuestion } from "../api/chat";
-import { sanitizeMessage } from "../utils/sanitize";
 
 export default function Chatbot() {
   const [question, setQuestion] = useState("");
