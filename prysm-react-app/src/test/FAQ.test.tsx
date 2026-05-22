@@ -6,8 +6,10 @@ import { prysmFaqData } from "../data/prysmFaqData";
 
 // Mock AccordionItem so we only test FAQ logic
 vi.mock("../components/AccordionItem.tsx", () => ({
-  default: ({ title }: { title: string }) => (
-    <div data-testid="faq-item">{title}</div>
+  default: ({ title, isExpanded, onToggle }: { title: string; isExpanded: boolean; onToggle: () => void }) => (
+    <div data-testid="faq-item" data-expanded={isExpanded} onClick={onToggle}>
+      {title}
+    </div>
   ),
 }));
 
@@ -80,3 +82,29 @@ describe("FAQ Search Functionality", () => {
   });
 
 });
+
+describe("FAQ Accordion Functionality", () => {
+    test("expands item on click", async () => {
+      render(<FAQ />);
+      const items = screen.getAllByTestId("faq-item");
+      await userEvent.click(items[0]);
+      expect(items[0]).toHaveAttribute("data-expanded", "true");
+    });
+
+    test("collapses already expanded item on second click", async () => {
+      render(<FAQ />);
+      const items = screen.getAllByTestId("faq-item");
+      await userEvent.click(items[0]);
+      await userEvent.click(items[0]);
+      expect(items[0]).toHaveAttribute("data-expanded", "false");
+    });
+
+    test("only one item expanded at a time", async () => {
+      render(<FAQ />);
+      const items = screen.getAllByTestId("faq-item");
+      await userEvent.click(items[0]);
+      await userEvent.click(items[1]);
+      expect(items[0]).toHaveAttribute("data-expanded", "false");
+      expect(items[1]).toHaveAttribute("data-expanded", "true");
+    });
+  });

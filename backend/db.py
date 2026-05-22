@@ -1,10 +1,7 @@
-import os
 from supabase import create_client
-from dotenv import load_dotenv
+from backend.config import settings
 
-load_dotenv()
-
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+supabase = create_client(
+    settings.SUPABASE_URL,
+    settings.SUPABASE_SERVICE_ROLE_KEY
+)

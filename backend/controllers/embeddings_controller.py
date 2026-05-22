@@ -1,8 +1,9 @@
 import logging
-from fastapi import UploadFile, File, HTTPException
+from fastapi import UploadFile, File, HTTPException, Form
 from backend.utils import pdf_util, chunk_util, embedding_util
 from backend.db import supabase
 from backend.config import settings
+import asyncio
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -36,16 +37,15 @@ async def validate_pdf_upload(file: UploadFile):
 
     await file.seek(0)
 
-from fastapi import UploadFile, File, HTTPException, Form
-from backend.utils import  pdf_util, chunk_util, embedding_util
-from backend.db import supabase
-
 async def embeddings_process(file: UploadFile = File(), title: str = None):
     await validate_pdf_upload(file)
 
     try:
         pdf_content = await file.read()
-        pages = pdf_util.extract_text(pdf_content)
+        pages = await asyncio.to_thread(
+            pdf_util.extract_text,
+            pdf_content
+        )
 
         total_chunks = 0
         chunk_index = 0
@@ -55,14 +55,16 @@ async def embeddings_process(file: UploadFile = File(), title: str = None):
             embeddings = await embedding_util.text_embedding(chunks)
 
             for chunk, embedding in zip(chunks, embeddings):
-                supabase.table("pdfdocuments").insert({
-                    "title": title,
-                    "source": file.filename,
-                    "content": chunk,
-                    "page_number": page["page_number"],
-                    "chunk_index": chunk_index,
-                    "embedding": embedding
-                }).execute()
+                await asyncio.to_thread(
+                    lambda chunk=chunk, embedding=embedding, chunk_index=chunk_index: supabase.table("pdfdocuments").insert({
+                        "title": title,
+                        "source": file.filename,
+                        "content": chunk,
+                        "page_number": page["page_number"],
+                        "chunk_index": chunk_index,
+                        "embedding": embedding
+                    }).execute()
+                )
 
                 chunk_index += 1
 
