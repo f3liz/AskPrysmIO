@@ -11,6 +11,17 @@ MAX_CHARS_CONTEXT = 4000
 def utc_now():
     return datetime.now(timezone.utc).isoformat()
 
+async def get_chat_history(user_id: str) -> list:
+    result = (
+        supabase.table("chats")
+        .select("id, title, created_at, updated_at")
+        .eq("user_id", user_id)
+        .order("updated_at", desc=True)
+        .execute()
+    )
+
+    return result.data or []
+
 
 async def generate_response(question: str, chat_id: str | None, user_id: str) -> dict:
     # 1. Create new chat if this is the first message
