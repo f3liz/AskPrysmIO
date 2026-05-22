@@ -35,10 +35,23 @@ def require_auth(request: Request):
         raise HTTPException(
             status_code=401, 
             detail="Not authenticated"
-            )
+        )
     
     try:
-        jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
+        username = payload.get("sub")
+
+        if not username:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid token"
+            )
+
+        return {
+            "id": username,
+            "username": username
+        }
 
     except JWTError:
         raise HTTPException(
