@@ -1,8 +1,9 @@
 export type Message = {
   content: string;
   role: "user" | "assistant";
-  timestamp: number;
-  id: string
+  id: string;
+  chat_id: string;
+  created_at: Date;
 }
 
 type FAQ = {

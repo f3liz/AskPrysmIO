@@ -4,6 +4,7 @@ import ChatBubble from "./ChatBubble";
 import type { Message } from "../types";
 import "../styles/chatbot.css";
 import { sendChatQuestion } from "../api/chat";
+import { sanitizeMessage } from "../utils/sanitize";
 
 export default function Chatbot() {
   const [question, setQuestion] = useState("");
@@ -27,8 +28,9 @@ export default function Chatbot() {
     const userMessage: Message = {
       content: currentQuestion,
       role: "user",
-      timestamp: Date.now(),
-      id: uuidv4()
+      id: uuidv4(),
+      created_at: new Date(),
+      chat_id: "",
     };
 
     setChat((prev) => [...prev, userMessage]);
@@ -41,8 +43,9 @@ export default function Chatbot() {
       const botMessage: Message = {
         content: answer,
         role: "assistant",
-        timestamp: Date.now(),
-        id: uuidv4()
+        created_at: new Date(),
+        id: uuidv4(),
+        chat_id: "",
       };
 
       setChat((prev) => [...prev, botMessage]);
@@ -93,8 +96,9 @@ export default function Chatbot() {
         {
           content: errorMessage,
           role: "assistant",
-          timestamp: Date.now(),
-          id: uuidv4()
+          created_at: new Date(),
+          id: uuidv4(),
+          chat_id: "",
         },
       ]);
     } finally {
@@ -110,8 +114,9 @@ export default function Chatbot() {
             content={sanitizeMessage(message.content)}
             key={message.id}
             role={message.role}
-            timestamp={message.timestamp}
-            id={message.id}
+            created_at={message.created_at}
+            id={message.chat_id}
+            chat_id={message.chat_id}
           />
         ))}
         {/* Shows the typing indicator */}
