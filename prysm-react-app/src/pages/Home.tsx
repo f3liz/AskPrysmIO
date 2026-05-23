@@ -1,4 +1,5 @@
 import Chatbot from "../components/Chatbot";
+import { ChatSidebar } from "../components/ChatSidebar";
 import prysmBg from "../assets/prysmIobg.png";
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
             <h2>Your next AI health Assistant.</h2>
 
             <div className="chatWrapper">
+              <ChatSidebar />
               <Chatbot />
             </div>
           </div>
