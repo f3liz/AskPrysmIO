@@ -23,11 +23,33 @@ class ChatHistoryItem(BaseModel):
     created_at: str
     updated_at: str
 
+class MessageHistoryItem(BaseModel):
+    role: str
+    content: str
+    created_at: str
+
+
+class ChatThreadResponse(BaseModel):
+    chat: ChatHistoryItem
+    messages: list[MessageHistoryItem]
+
 @router.get("/history", response_model=list[ChatHistoryItem])
 async def get_chat_history(
     user = Depends(auth_controller.require_auth)
 ) -> list[ChatHistoryItem]:
     result = await chat_controller.get_chat_history(user_id=user["id"])
+
+    return result
+
+@router.get("/{chat_id}", response_model=ChatThreadResponse)
+async def get_chat_thread(
+    chat_id: str,
+    user = Depends(auth_controller.require_auth)
+) -> ChatThreadResponse:
+    result = await chat_controller.get_chat_thread(
+        chat_id=chat_id,
+        user_id=user["id"]
+    )
 
     return result
 

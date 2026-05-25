@@ -22,6 +22,35 @@ async def get_chat_history(user_id: str) -> list:
 
     return result.data or []
 
+async def get_chat_thread(chat_id: str, user_id: str) -> dict:
+    chat_result = (
+        supabase.table("chats")
+        .select("id, title, created_at, updated_at")
+        .eq("id", chat_id)
+        .eq("user_id", user_id)
+        .execute()
+    )
+
+    if not chat_result.data:
+        raise HTTPException(
+            status_code=404,
+            detail="Chat not found"
+        )
+
+    chat = chat_result.data[0]
+
+    messages_result = (
+        supabase.table("messages")
+        .select("role, content, created_at")
+        .eq("chat_id", chat_id)
+        .order("created_at", desc=False)
+        .execute()
+    )
+
+    return {
+        "chat": chat,
+        "messages": messages_result.data or []
+    }
 
 async def generate_response(question: str, chat_id: str | None, user_id: str) -> dict:
     # 1. Create new chat if this is the first message
