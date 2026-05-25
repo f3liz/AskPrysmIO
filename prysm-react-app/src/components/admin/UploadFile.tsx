@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
-import "../styles/admin-view.css";
-import { sendEmbeddings } from "../api/embeddings";
+import "../../styles/admin-view.css";
+import { sendEmbeddings } from "../../api/embeddings";
 
-function Admin() {
+function UploadFile() {
   const [pdfTitle, setPdfTitle] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [uploadRes, setUploadRes] = useState("");
@@ -61,7 +61,6 @@ function Admin() {
     }
   };
 
-  // Helper function to determine the color class based on the response message
   const getStatusClass = () => {
     if (uploadRes.includes("successful")) return "status-success";
     if (uploadRes === "Uploading...") return "status-uploading";
@@ -125,4 +124,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default UploadFile;

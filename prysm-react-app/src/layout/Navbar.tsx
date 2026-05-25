@@ -12,18 +12,23 @@ function Navbar() {
       </Link>
 
       <div className="btn-container">
-        <NavLink 
-          to="/faq" 
-          className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+        <NavLink
+          to="/faq"
+          className={({ isActive }) =>
+            isActive ? "nav-item active" : "nav-item"
+          }
         >
           <button className="navButton">Go to FAQ</button>
         </NavLink>
-        
-        <NavLink 
-          to="/admin" 
-          className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+
+        {/* Change to have the admin tab only appear when the user is an admin. Admin page should have mini nav bar for all admin features */}
+        <NavLink
+          to="/admin"
+          className={({ isActive }) =>
+            isActive ? "nav-item active" : "nav-item"
+          }
         >
-          <button className="navButton">File Upload</button>
+          <button className="navButton">Admin</button>
         </NavLink>
       </div>
     </header>
