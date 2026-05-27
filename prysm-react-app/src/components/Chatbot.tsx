@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import ChatBubble from "./ChatBubble";
 import type { Message } from "../types";
-import "../styles/chatbot.css";
 import { sendChatQuestion } from "../api/chat";
 import { sanitizeMessage } from "../utils/sanitize";
 
