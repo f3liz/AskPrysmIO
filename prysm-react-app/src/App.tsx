@@ -7,12 +7,14 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./layout/MainLayout";
 import { AuthProvider } from "./context/AuthProvider";
+import { ChatProvider } from "./context/ChatProvider";
 import "./App.css";
 
 export default function App() {
   return (
   <Router>
     <AuthProvider>
+      <ChatProvider>
       <Routes>
         {/* 1. Routes WITHOUT the Layout (Login, Signup, etc.) */}
         <Route path="/login" element={<Login />} />
@@ -29,6 +31,7 @@ export default function App() {
         {/* 404 can go either way */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      </ChatProvider>
     </AuthProvider>
   </Router>
   );

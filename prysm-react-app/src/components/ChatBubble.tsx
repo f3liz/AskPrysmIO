@@ -1,12 +1,11 @@
-import "../styles/chatbot.css";
 import type { Message } from "../types";
 
 export default function ChatBubble({
   content,
   role,
-  timestamp,
+  created_at,
 }: Message) {
-  const time = new Date(timestamp).toLocaleTimeString([], {
+  const time = new Date(created_at).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
