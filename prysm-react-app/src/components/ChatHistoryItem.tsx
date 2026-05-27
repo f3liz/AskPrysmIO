@@ -1,5 +1,5 @@
 import type { Chat } from "../types";
-import { useAuth } from "../context/useAuth";
+import { useChat } from "../context/useChat";
 
 type ChatHistoryItemProps = {
     chat: Chat,
@@ -8,7 +8,7 @@ type ChatHistoryItemProps = {
 
 export function ChatHistoryItem({chat, isActive}: ChatHistoryItemProps){
 
-    const {changeActiveChat} = useAuth()
+    const {changeActiveChat} = useChat()
 
     return(
         <div className={`chat-history-item ${isActive ? "active" : ""}`} onClick={()=>changeActiveChat(chat.id)}>

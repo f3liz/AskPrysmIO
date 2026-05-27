@@ -1,7 +1,7 @@
 import { getHistory } from "../api/chatHistory";
 import { ChatHistoryItem } from "./ChatHistoryItem";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/useAuth";
+import { useChat } from "../context/useChat";
 import type { Chat } from "../types";
 import { chatData } from "../data/chats";
 
@@ -10,7 +10,8 @@ export function ChatSidebar(){
     const [chats, setChats] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const {activeChat} = useAuth();
+    const {activeChat} = useChat();
+    const {startNewChat} = useChat();
 
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export function ChatSidebar(){
 
     return (
         <div className="sidebar">
+            <button className="new-chat-btn" onClick={startNewChat}>New Chat</button>
             {loading && (
                 <p className="sidebar-status">Loading...</p>
             )}
