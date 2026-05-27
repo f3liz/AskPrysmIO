@@ -1,15 +1,17 @@
 from datetime import datetime, timezone
 from uuid import uuid4
+
 from fastapi import HTTPException
 
 from backend.db import supabase
-from backend.utils import question_retrieval_util, prompting_util, llm_util 
+from backend.utils import question_retrieval_util, prompting_util, llm_util
 
 MAX_CHARS_CONTEXT = 4000
 
 
 def utc_now():
     return datetime.now(timezone.utc).isoformat()
+
 
 async def get_chat_history(user_id: str) -> list:
     result = (
@@ -22,6 +24,7 @@ async def get_chat_history(user_id: str) -> list:
 
     return result.data or []
 
+
 async def get_chat_thread(chat_id: str, user_id: str) -> dict:
     chat_result = (
         supabase.table("chats")
@@ -32,10 +35,7 @@ async def get_chat_thread(chat_id: str, user_id: str) -> dict:
     )
 
     if not chat_result.data:
-        raise HTTPException(
-            status_code=404,
-            detail="Chat not found"
-        )
+        raise HTTPException(status_code=404, detail="Chat not found")
 
     chat = chat_result.data[0]
 
@@ -49,11 +49,11 @@ async def get_chat_thread(chat_id: str, user_id: str) -> dict:
 
     return {
         "chat": chat,
-        "messages": messages_result.data or []
+        "messages": messages_result.data or [],
     }
 
+
 async def generate_response(question: str, chat_id: str | None, user_id: str) -> dict:
-    # 1. Create new chat if this is the first message
     if chat_id is None:
         chat_id = str(uuid4())
 
@@ -62,12 +62,11 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
             "user_id": user_id,
             "title": question[:60],
             "created_at": utc_now(),
-            "updated_at": utc_now()
+            "updated_at": utc_now(),
         }
 
         supabase.table("chats").insert(new_chat).execute()
 
-    # 2. If chat_id exists, verify the chat belongs to this user
     else:
         chat_result = (
             supabase.table("chats")
@@ -78,23 +77,18 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
         )
 
         if not chat_result.data:
-            raise HTTPException(
-                status_code=404,
-                detail="Chat not found"
-            )
+            raise HTTPException(status_code=404, detail="Chat not found")
 
-    # 3. Save user message before calling the LLM
     user_message = {
         "id": str(uuid4()),
         "chat_id": chat_id,
         "role": "user",
         "content": question,
-        "created_at": utc_now()
+        "created_at": utc_now(),
     }
 
     supabase.table("messages").insert(user_message).execute()
 
-    # 4. Get RAG context from your documents
     results = await question_retrieval_util.search_docs(question)
 
     if not results:
@@ -105,7 +99,7 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
             "chat_id": chat_id,
             "role": "assistant",
             "content": answer,
-            "created_at": utc_now()
+            "created_at": utc_now(),
         }
 
         supabase.table("messages").insert(assistant_message).execute()
@@ -116,58 +110,45 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
 
         return {
             "chat_id": chat_id,
-            "answer": answer
+            "answer": answer,
         }
-    
+
     context_chunks = []
     size = 0
 
-            if size + len(text) > MAX_CHARS_CONTEXT:
-                break
+    for chunk in results:
+        text = chunk["content"]
 
-            context_chunks.append(text)
-            size += len(text)
+        if size + len(text) > MAX_CHARS_CONTEXT:
+            break
 
-        context = "\n\n".join(context_chunks)
+        context_chunks.append(text)
+        size += len(text)
 
-    # 5. Fetch full message history for this chat
-    history_result = (
-        supabase.table("messages")
-        .select("role, content, created_at")
-        .eq("chat_id", chat_id)
-        .order("created_at")
-        .execute()
-    )
+    context = "\n\n".join(context_chunks)
 
-    history = history_result.data or []
-
-    # 6. Pass full prior history into the prompt
     messages = prompting_util.build_messages(
         question=question,
         context=context,
-        history=history
     )
 
-    # 7. Call LLM
     answer = await llm_util.generate_answer(messages)
 
-    # 8. Save assistant response
     assistant_message = {
         "id": str(uuid4()),
         "chat_id": chat_id,
         "role": "assistant",
         "content": answer,
-        "created_at": utc_now()
+        "created_at": utc_now(),
     }
 
     supabase.table("messages").insert(assistant_message).execute()
 
-    # 9. Update chat timestamp
     supabase.table("chats").update({
         "updated_at": utc_now()
     }).eq("id", chat_id).execute()
 
     return {
         "chat_id": chat_id,
-        "answer": answer
+        "answer": answer,
     }
