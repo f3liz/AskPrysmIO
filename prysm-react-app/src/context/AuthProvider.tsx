@@ -5,7 +5,9 @@ import { api, setupInterceptors } from "../api/api";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [activeChat, setActiveChat] = useState<string>("");
 
+  const changeActiveChat = (chatID: string) => setActiveChat(chatID);
   const loginUser = () => setIsAuthenticated(true);
   const logoutUser = () => setIsAuthenticated(false);
   const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 if (loading) return <div>Loading...</div>
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser, activeChat, changeActiveChat }}>
       {children}
     </AuthContext.Provider>
   );
