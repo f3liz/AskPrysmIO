@@ -3,7 +3,7 @@ export type Message = {
   role: "user" | "assistant";
   id: string;
   chat_id: string;
-  created_at: Date;
+  created_at: any;
 }
 
 export type Chat = {

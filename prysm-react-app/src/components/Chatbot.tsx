@@ -28,9 +28,6 @@ export default function Chatbot() {
     loadMessages();
   }, [activeChat])
 
-  useEffect(()=>{
-    console.log(messages)
-  }, [messages])
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 

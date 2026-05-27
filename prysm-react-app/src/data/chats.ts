@@ -1,4 +1,4 @@
-export const chats = [
+export const chatData = [
   {
     "id": "f9e8d7c6-b5a4-3210-fedc-ba9876543210",
     "created_at": "2026-05-22T10:00:00.000Z",
