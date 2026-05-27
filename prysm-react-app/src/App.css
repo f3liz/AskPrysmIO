@@ -203,6 +203,30 @@ html, body, #root {
     color: rgba(255, 100, 100, 0.85);
 }
 
+.new-chat-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: calc(100% - 12px);
+    margin: 8px 6px;
+    padding: 10px 14px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.new-chat-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.new-chat-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
 /* Ensure the messages still have breathing room */
 .chat-messages {
   flex: 1;
