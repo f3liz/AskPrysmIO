@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
 from dotenv import load_dotenv
-from backend.routers import chats, check, embeddings, auth
+from backend.routers import chats, check, embeddings, auth, users
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from backend.utils.limiter import limiter
@@ -117,3 +117,4 @@ app.include_router(chats.router)
 app.include_router(check.router)
 app.include_router(embeddings.router)
 app.include_router(auth.router)
+app.include_router(users.router)
