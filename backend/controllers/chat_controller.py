@@ -122,16 +122,13 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
     context_chunks = []
     size = 0
 
-    for chunk in results:
-        text = chunk["content"]
+            if size + len(text) > MAX_CHARS_CONTEXT:
+                break
 
-        if size + len(text) > MAX_CHARS_CONTEXT:
-            break
+            context_chunks.append(text)
+            size += len(text)
 
-        context_chunks.append(text)
-        size += len(text)
-    
-    context = "\n\n".join(context_chunks)
+        context = "\n\n".join(context_chunks)
 
     # 5. Fetch full message history for this chat
     history_result = (
