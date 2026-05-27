@@ -1,22 +1,36 @@
 import { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import ChatBubble from "./ChatBubble";
+import { ChatWindow } from "./ChatWindow";
 import type { Message } from "../types";
 import { sendChatQuestion } from "../api/chat";
-import { sanitizeMessage } from "../utils/sanitize";
+import { useChat } from "../context/useChat";
+import { messageData } from "../data/messages";
 
 export default function Chatbot() {
   const [question, setQuestion] = useState("");
-  const [chat, setChat] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const {activeChat, messages, setMessages} = useChat();
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   // scrolling
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat, isTyping]);
+  }, [messages, isTyping]);
 
+  useEffect(()=> {
+    if (!activeChat) return
+
+    async function loadMessages(){
+      setMessages(messageData);
+    }
+
+    loadMessages();
+  }, [activeChat])
+
+  useEffect(()=>{
+    console.log(messages)
+  }, [messages])
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -32,7 +46,8 @@ export default function Chatbot() {
       chat_id: "",
     };
 
-    setChat((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setQuestion("");
     setIsTyping(true);
 
@@ -47,7 +62,7 @@ export default function Chatbot() {
         chat_id: "",
       };
 
-      setChat((prev) => [...prev, botMessage]);
+      setMessages([...updatedMessages, botMessage]);
     } catch (error: unknown) {
       console.error("Chat API Error:", error);
 
@@ -90,16 +105,13 @@ export default function Chatbot() {
         }
       }
 
-      setChat((prev) => [
-        ...prev,
-        {
-          content: errorMessage,
-          role: "assistant",
-          created_at: new Date(),
-          id: uuidv4(),
-          chat_id: "",
-        },
-      ]);
+      setMessages([...updatedMessages, {
+        content: errorMessage,
+        role: "assistant",
+        created_at: new Date(),
+        id: uuidv4(),
+        chat_id: "",
+    }]);
     } finally {
       setIsTyping(false);
     }
@@ -107,28 +119,7 @@ export default function Chatbot() {
 
   return (
     <div className="chat-container">
-      <div className="chat-messages">
-        {chat.map((message) => (
-          <ChatBubble
-            content={sanitizeMessage(message.content)}
-            key={message.id}
-            role={message.role}
-            created_at={message.created_at}
-            id={message.chat_id}
-            chat_id={message.chat_id}
-          />
-        ))}
-        {/* Shows the typing indicator */}
-        {isTyping && (
-          <div className="message assistant typing">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        )}
-
-        <div ref={bottomRef} />
-      </div>
+      <ChatWindow messages={messages} isTyping={isTyping} bottomRef={bottomRef} activeChatID={activeChat} />
 
       <form className="chatbot-input" onSubmit={handleSubmit}>
         <input
