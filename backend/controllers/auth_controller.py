@@ -41,15 +41,16 @@ def require_auth(request: Request):
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
         username = payload.get("sub")
+        user_id = payload.get("user_id")
 
-        if not username:
+        if not username or user_id is None:
             raise HTTPException(
                 status_code=401,
                 detail="Invalid token"
             )
 
         return {
-            "id": username,
+            "id": user_id,
             "username": username
         }
 
@@ -88,8 +89,9 @@ def refresh_logic(request: Request, response: Response):
             raise HTTPException(status_code=401, detail="Invalid token type")
         
         username = payload.get("sub")
+        user_id = payload.get("user_id")
 
-        new_access_token = create_access_token(data={"sub": username})
+        new_access_token = create_access_token(data={"sub": username, "user_id": user_id})
 
         response.set_cookie(
             key="access_token",
@@ -116,10 +118,10 @@ def process_login(body: LoginRequest, response: Response):
         )
 
     access_token = create_access_token(
-        data={"sub": body.username}
+        data={"sub": body.username, "user_id": 1} # temp fixed admin ID 
     )
     refresh_token = create_refresh_token(
-        data={"sub": body.username}
+        data={"sub": body.username, "user_id": 1}
     )
 
     response.set_cookie(
