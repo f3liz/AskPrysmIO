@@ -9,6 +9,13 @@ Users Structure
 
 from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import Optional
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    is_admin: Optional[bool] = None
+    password: Optional[str] = None
 
 
 users_db = [
@@ -42,3 +49,21 @@ async def get_all_users():
     
     return {"users": users_db}
         
+
+async def get_user_id(id:int):
+    for users in users_db:
+        if users.get("id") == id:
+            return {"user": users}
+    raise HTTPException(status_code=404)
+
+
+async def update_user(id: int, body: UserUpdate):
+    for index, user in enumerate(users_db):
+        if user.get("id") == id:
+            update_data = body.model_dump(exclude_unset=True)
+            user.update(update_data)
+            
+            users_db[index] = user
+            return {"user": user}
+            
+    raise HTTPException(status_code=404, detail="User not found")
