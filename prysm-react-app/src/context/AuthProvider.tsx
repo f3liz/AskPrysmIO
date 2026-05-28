@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 if (loading) return <div>Loading...</div>
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser}}>
       {children}
     </AuthContext.Provider>
   );

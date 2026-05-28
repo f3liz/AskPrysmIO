@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import type { Message } from "../types";
 
 export interface AuthContextType {
   isAuthenticated: boolean;
