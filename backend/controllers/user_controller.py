@@ -1,69 +1,70 @@
-"""
-Users Structure
-- id
-- username
-- is_admin
-- password
-- created_at (auto?)
-"""
-
-from datetime import datetime, timezone
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+import os
 from typing import Optional
+from dotenv import load_dotenv
+from fastapi import HTTPException
+from pydantic import BaseModel
+from supabase import create_client, Client
+
+load_dotenv()
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+    is_admin: Optional[bool] = False
 
 class UserUpdate(BaseModel):
     username: Optional[str] = None
     is_admin: Optional[bool] = None
     password: Optional[str] = None
 
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
-users_db = [
-    {
-        "id": 1,
-        "username": "admin_user",
-        "is_admin": True,
-        "password": "hashed_password_1",
-        "created_at": datetime.now(timezone.utc).isoformat()
-    },
-    {
-        "id": 2,
-        "username": "jdoe",
-        "is_admin": False,
-        "password": "hashed_password_2",
-        "created_at": datetime.now(timezone.utc).isoformat()
-    },
-    {
-        "id": 3,
-        "username": "alice_dev",
-        "is_admin": False,
-        "password": "hashed_password_3",
-        "created_at": datetime.now(timezone.utc).isoformat()
-    }
-]
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise ValueError(
+        f"Critical Environment Variables Missing: "
+        f"SUPABASE_URL={SUPABASE_URL}, SUPABASE_SERVICE_ROLE_KEY={'Set' if SUPABASE_KEY else 'None'}"
+    )
 
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 async def get_all_users():
-    if not users_db:
+    response = supabase.table("users").select("*").execute()
+    if not response.data:
         raise HTTPException(status_code=404, detail="No users found")
-    
-    return {"users": users_db}
+    return {"users": response.data}
         
+async def get_user_id(id: int):
+    response = supabase.table("users").select("*").eq("id", id).execute()
+    if not response.data:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"user": response.data[0]}
 
-async def get_user_id(id:int):
-    for users in users_db:
-        if users.get("id") == id:
-            return {"user": users}
-    raise HTTPException(status_code=404)
-
+async def create_user(body: UserCreate):
+    user_data = body.model_dump()
+    
+    response = supabase.table("users").insert(user_data).execute()
+    
+    if not response.data:
+        raise HTTPException(status_code=400, detail="Failed to create user")
+        
+    return {"user": response.data[0]}
 
 async def update_user(id: int, body: UserUpdate):
-    for index, user in enumerate(users_db):
-        if user.get("id") == id:
-            update_data = body.model_dump(exclude_unset=True)
-            user.update(update_data)
-            
-            users_db[index] = user
-            return {"user": user}
-            
-    raise HTTPException(status_code=404, detail="User not found")
+    update_data = body.model_dump(exclude_unset=True)
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No data provided to update")
+
+    response = supabase.table("users").update(update_data).eq("id", id).execute()
+    if not response.data:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    return {"user": response.data[0]}
+
+async def delete_user(id: int):
+    response = supabase.table("users").delete().eq("id", id).execute()
+    
+    if not response.data:
+        raise HTTPException(status_code=404, detail="User not found or already deleted")
+        
+    return {"message": "User deleted successfully", "deleted_user": response.data[0]}
