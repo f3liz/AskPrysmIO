@@ -8,7 +8,6 @@ on:
       - main
   pull_request:
     branches:
-      - UpdateDeployment
       - dev
       - main
 
@@ -27,8 +26,14 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm ci
-      - run: npm run build
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Run frontend tests
+        run: npm test -- --run
+
+      - name: Build frontend
+        run: npm run build
 
   backend-build:
     runs-on: ubuntu-latest
@@ -44,5 +49,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: pip install -r requirements.txt
-      - run: python -m compileall .
+      - name: Install backend dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run backend tests
+        run: pytest
+
+      - name: Validate backend build
+        run: python -m compileall .
