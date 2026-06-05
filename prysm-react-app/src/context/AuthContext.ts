@@ -1,8 +1,14 @@
 import { createContext } from "react";
-import type { Message } from "../types";
+
+export interface User {
+  id: number;
+  username: string;
+  is_admin: boolean;
+}
 
 export interface AuthContextType {
-  isAuthenticated: boolean;
+  user: User | null;
+  isLoading: boolean;
   loginUser: () => void;
   logoutUser: () => void;
 }

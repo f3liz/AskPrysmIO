@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Response, Depends, Request
 from pydantic import BaseModel
-from backend.controllers.auth_controller import process_login, process_logout, refresh_logic
+from backend.controllers.auth_controller import process_login, process_logout, refresh_logic, require_auth
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -19,3 +19,7 @@ def logout(response: Response):
 @router.get("/refresh")
 async def refresh_token(request: Request, response: Response):
     return refresh_logic(request, response)
+
+@router.get("/me")
+def get_current_session(user: dict = Depends(require_auth)):
+    return user
