@@ -1,7 +1,6 @@
 import type { Message } from "../types";
 import ChatBubble from "./ChatBubble";
 import { sanitizeMessage } from "../utils/sanitize";
-import { useEffect } from "react";
 type ChatWindowProps = {
     messages: Message[]
     isTyping: boolean

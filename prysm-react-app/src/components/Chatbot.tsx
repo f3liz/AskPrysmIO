@@ -61,10 +61,10 @@ export default function Chatbot() {
     setIsTyping(true);
 
     try {
-      const answer = await sendChatQuestion(currentQuestion);
+      const answer = await sendChatQuestion(currentQuestion, activeChat);
 
       const botMessage: Message = {
-        content: answer,
+        content: answer.answer,
         role: "assistant",
         created_at: new Date(),
         id: uuidv4(),

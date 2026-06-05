@@ -41,11 +41,19 @@ export function ChatSidebar(){
             )}
 
             {!loading && !error && (
-                chats.length === 0
-                    ? <p className="sidebar-status">No chat history</p>
-                    : chats.map((chat: Chat) => (
-                        <ChatHistoryItem chat={chat} key={chat.id} isActive={chat.id === activeChat} />
-                    ))
+                chats.length === 0 ? (
+                    <p className="sidebar-status">No chat history</p>
+                ) : (
+                    <div className="sidebar-items">
+                        {chats.map((chat: Chat) => (
+                            <ChatHistoryItem
+                                chat={chat}
+                                key={chat.id}
+                                isActive={chat.id === activeChat}
+                            />
+                        ))}
+                    </div>
+                )
             )}
         </div>
     )
