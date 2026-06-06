@@ -77,6 +77,9 @@ OPENROUTER_API_KEY=
 
 These values are stored securely in Render and are not committed to the repository.
 
+### Note about backend CI
+Backend tests are not currently run in CI because the existing backend tests require live environment variables and external services such as Supabase and API providers. For this handoff, backend validation is performed through dependency installation and Python compilation checks. Future backend test improvements should mock external services so tests can run safely in CI without production secrets.
+
 ### Continuous Integration
 
 GitHub Actions automatically validates frontend and backend changes when code is pushed to configured branches.
