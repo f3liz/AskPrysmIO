@@ -346,7 +346,7 @@ select.admin-input option {
 }
 
 /* =========================================
-   6. Modals
+   6. Modals (Overhauled for compactness)
    ========================================= */
 .modal-overlay {
   position: fixed;
@@ -359,24 +359,86 @@ select.admin-input option {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: var(--space-4);
 }
 
 .modal-content {
   background-color: var(--surface-dark);
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  padding: var(--space-4); /* Tightened from var(--space-6) */
+  border-radius: var(--radius-xl); /* Matches admin form radius */
   width: 100%;
-  max-width: var(--admin-max-width);
+  max-width: 400px; /* Reduced for standard dialog width */
   color: var(--text-main);
   border: var(--border-width-sm) solid var(--border-subtle);
   box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
 }
 
-.modal-actions {
-  display: flex;
+.modal-content h2 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-main);
+  padding-bottom: var(--space-2); /* Tightened gap */
+  border-bottom: var(--border-width-sm) solid var(--border-subtle);
+  margin-bottom: var(--space-3); /* Tightened gap */
+  letter-spacing: var(--letter-spacing-sm);
+}
+
+.modal-form {
+  margin-top: 0;
+}
+
+/* Modal Specific Gaps for compact field rows */
+.modal-form .form-field-group {
+  margin-top: 0;
+  margin-bottom: var(--space-4); /* Tight space between fields */
+}
+
+.modal-form .form-submit-row {
   justify-content: flex-end;
-  gap: var(--space-4);
-  margin-top: var(--space-4);
+  gap: var(--space-2); /* Tight button gap */
+  margin-top: var(--space-3); /* Reduced margin on action row */
+  padding-top: 0; /* Remove top borders/padding */
+  border-top: none;
+}
+
+/* Ensure modal buttons retain standard design shapes but adapt size */
+.modal-form .admin-submit-btn {
+  margin-top: 0;
+  padding: 10px 16px; /* Standardize size, remove excessive padding */
+  text-transform: none; /* User decision - can keep full uppercase or make standard caps */
+}
+
+/* Modal Inputs seamlessly use standard styling */
+.modal-content input[type="text"],
+.modal-content input[type="password"], /* <-- Added password type here */
+.modal-content select {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width-sm) solid var(--border-subtle);
+  outline: none;
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  border-radius: var(--radius-lg);
+  color: var(--text-main);
+  background: var(--input-bg);
+  transition: all var(--transition-fast);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="password"]:focus, /* <-- Added password type here */
+.modal-content select:focus {
+  border-color: var(--accent-glow);
+  background: var(--input-bg-focus);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+.modal-content select option {
+  background: var(--surface-dark);
+  color: var(--text-main);
 }
 
 /* =========================================
@@ -439,6 +501,23 @@ select.admin-input option {
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
   margin-left: var(--space-2);
+}
+
+/* Utility Text Button Style */
+.text-button {
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.text-button:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .edit-btn {

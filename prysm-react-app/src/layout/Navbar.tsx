@@ -1,6 +1,9 @@
 import { NavLink, Link } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 function Navbar() {
+  const { user } = useAuth();
+
   return (
     <header className="navbar">
       <Link to="/" className="brand-link">
@@ -21,15 +24,16 @@ function Navbar() {
           <button className="navButton">Go to FAQ</button>
         </NavLink>
 
-        {/* Change to have the admin tab only appear when the user is an admin. Admin page should have mini nav bar for all admin features */}
-        <NavLink
-          to="/admin"
-          className={({ isActive }) =>
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          <button className="navButton">Admin</button>
-        </NavLink>
+        {user?.is_admin && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+          >
+            <button className="navButton">Admin</button>
+          </NavLink>
+        )}
       </div>
     </header>
   );
