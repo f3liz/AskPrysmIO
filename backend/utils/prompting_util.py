@@ -1,4 +1,4 @@
-def build_messages(question: str, context: str) -> list[dict]:
+def build_messages(question: str, context: str, history: str) -> list[dict]:
 
     has_context = bool(context and context.strip())
 
