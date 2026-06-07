@@ -4,14 +4,18 @@ import { sanitizeMessage } from "../utils/sanitize";
 type ChatWindowProps = {
     messages: Message[]
     isTyping: boolean
+    isLoading: boolean
     bottomRef: React.RefObject<HTMLDivElement | null>
     activeChatID: string | null
 }
 
-export function ChatWindow({ messages, isTyping, bottomRef, activeChatID }: ChatWindowProps) {
+export function ChatWindow({ messages, isTyping, isLoading, bottomRef, activeChatID }: ChatWindowProps) {
     return (
-        <div className="chat-messages">
-            {messages.map((message) => (
+    <div className="chat-messages">
+        {isLoading ? (
+            <p>Loading...</p>
+        ) : messages.length > 0 ? (
+            messages.map((message) => (
                 <ChatBubble
                     content={sanitizeMessage(message.content)}
                     key={message.id}
@@ -20,15 +24,18 @@ export function ChatWindow({ messages, isTyping, bottomRef, activeChatID }: Chat
                     id={message.id}
                     chat_id={message.chat_id}
                 />
-            ))}
+            ))
+        ) : (
+            <p>Start a new chat today!</p>
+        )}
 
-            {isTyping && (
-                <div className="message assistant typing">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            )}
+        {isTyping && (
+            <div className="message assistant typing">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        )}
 
             <div ref={bottomRef} />
         </div>

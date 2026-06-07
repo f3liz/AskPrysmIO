@@ -24,6 +24,7 @@ class ChatHistoryItem(BaseModel):
     updated_at: str
 
 class MessageHistoryItem(BaseModel):
+    id: str
     role: str
     content: str
     created_at: str

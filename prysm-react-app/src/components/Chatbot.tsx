@@ -4,13 +4,13 @@ import { ChatWindow } from "./ChatWindow";
 import type { Message } from "../types";
 import { sendChatQuestion } from "../api/chat";
 import { useChat } from "../context/useChat";
-import { messageData } from "../data/messages";
-import { sanitizeMessage } from "../utils/sanitize";
+import { retrieveChatHistory } from "../api/chatHistory";
 
 export default function Chatbot() {
   const [question, setQuestion] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const {activeChat, messages, setMessages} = useChat();
+  const [loading, setLoading] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -21,12 +21,23 @@ export default function Chatbot() {
 
   useEffect(()=> {
     if (!activeChat) return
+    let active = true;
 
     async function loadMessages(){
-      setMessages(messageData);
+      if(loading) return;
+      setLoading(true);
+
+      try{
+        const response = await retrieveChatHistory(activeChat);
+        if (active) setMessages(response.messages)
+      } catch (err) {
+        console.error("Failed to retrieve message history.")
+      }
+      setLoading(false)
     }
 
     loadMessages();
+    return () => {active=false;}
   }, [activeChat])
 
   async function handleSubmit(e: React.FormEvent) {
@@ -50,10 +61,10 @@ export default function Chatbot() {
     setIsTyping(true);
 
     try {
-      const answer = await sendChatQuestion(currentQuestion);
+      const answer = await sendChatQuestion(currentQuestion, activeChat);
 
       const botMessage: Message = {
-        content: answer,
+        content: answer.answer,
         role: "assistant",
         created_at: new Date(),
         id: uuidv4(),
@@ -117,7 +128,7 @@ export default function Chatbot() {
 
   return (
     <div className="chat-container">
-      <ChatWindow messages={messages} isTyping={isTyping} bottomRef={bottomRef} activeChatID={activeChat} />
+      <ChatWindow messages={messages} isTyping={isTyping} bottomRef={bottomRef} activeChatID={activeChat} isLoading={loading}/>
 
       <form className="chatbot-input" onSubmit={handleSubmit}>
         <input
