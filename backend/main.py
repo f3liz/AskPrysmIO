@@ -13,8 +13,6 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from backend.utils.limiter import limiter
 
-from backend.routers import chats, check, embeddings, auth
-
 app = FastAPI()
 
 app.state.limiter = limiter

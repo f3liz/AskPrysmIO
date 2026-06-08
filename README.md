@@ -36,5 +36,83 @@ Full documentation is available in the docs folder.
 - [API Reference](docs/api.md)
 ---
 ### Disclaimer
-This project is for educational purposes and is being built as a part of Green River College's Software Development 2025-2026 Senior Capstone.
 
+---
+
+### Deployment & CI/CD
+### Production Deployment
+
+### The AskPrysmIO application is deployed using:
+
+Frontend: Vercel
+Backend: Render
+Source Control: GitHub
+Continuous Integration: GitHub Actions
+
+The frontend is hosted at:
+
+https://askprysmio.vercel.app
+
+The backend is hosted at:
+
+https://askprysmio.onrender.com
+Environment Variables
+Frontend (Vercel)
+
+### Required environment variables:
+
+VITE_BACKEND_API_ROUTE=https://askprysmio.onrender.com/chats/
+VITE_BACKEND_API_ROUTE_AUTH=https://askprysmio.onrender.com/auth/
+VITE_BACKEND_API_ROUTE_EMBEDDINGS=https://askprysmio.onrender.com/embeddings/
+
+### Backend (Render)
+### Required environment variables:
+
+SUPABASE_URL=
+SUPABASE_KEY=
+SECRET_KEY=
+ALGORITHM=
+ACCESS_TOKEN_EXPIRE=
+OPENROUTER_API_KEY=
+
+These values are stored securely in Render and are not committed to the repository.
+
+### Note about backend CI
+Backend tests are not currently run in CI because the existing backend tests require live environment variables and external services such as Supabase and API providers. For this handoff, backend validation is performed through dependency installation and Python compilation checks. Future backend test improvements should mock external services so tests can run safely in CI without production secrets.
+
+### Continuous Integration
+
+GitHub Actions automatically validates frontend and backend changes when code is pushed to configured branches.
+
+### Frontend validation:
+
+cd prysm-react-app
+npm ci
+npm run build
+
+### Backend validation:
+
+cd backend
+pip install -r requirements.txt
+python -m compileall .
+
+If any build or validation step fails, the workflow stops and the failure is displayed in GitHub Actions.
+
+### Production Configuration
+
+The backend CORS configuration allows requests from:
+
+http://localhost:5173
+https://askprysmio.vercel.app
+
+This allows both local development and production deployments to communicate with the FastAPI backend.
+
+### Deployment Verification
+
+Production deployment was verified by:
+
+Deploying the frontend through Vercel.
+Deploying the backend through Render.
+Confirming GitHub Actions successfully validates frontend and backend builds.
+Confirming requests from the production frontend return HTTP 200 responses from the production backend.
+Confirming no CORS or routing errors occur when communicating between the deployed frontend and backend.
