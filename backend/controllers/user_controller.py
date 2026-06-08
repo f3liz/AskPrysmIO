@@ -77,10 +77,8 @@ async def update_user(id: int, body: UserUpdate):
     return {"user": response.data[0]}
 
 async def delete_user(id: int):
-    # 1. Wipe the user's chats first to satisfy the database foreign key constraint
     supabase.table("chats").delete().eq("user_id", id).execute()
     
-    # 2. Now the database will allow you to delete the user safely
     response = supabase.table("users").delete().eq("id", id).execute()
     
     if not response.data:
