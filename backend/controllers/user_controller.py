@@ -5,8 +5,8 @@ from fastapi import HTTPException
 from pydantic import BaseModel, Field
 from supabase import create_client, Client
 from passlib.context import CryptContext
+from backend.config import settings
 
-load_dotenv()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -27,8 +27,8 @@ class UserUpdate(BaseModel):
     is_admin: Optional[bool] = None
     password: Optional[str] = Field(None, max_length=72)
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+SUPABASE_URL = settings.SUPABASE_URL
+SUPABASE_KEY = settings.SUPABASE_SERVICE_ROLE_KEY
 
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise ValueError(
