@@ -1,4 +1,5 @@
 import type { Message } from "../types";
+import ReactMarkdown from 'react-markdown'
 
 export default function ChatBubble({
   content,
@@ -13,7 +14,9 @@ export default function ChatBubble({
   return (
     <div className={`message ${role}`}>
       <div className="bubble">
-        <p>{content}</p>
+        <div className="markdown">
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
         <span className="timestamp">{time}</span>
       </div>
     </div>
