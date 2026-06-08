@@ -20,6 +20,8 @@ def build_messages(question: str, context: str, history: str = "") -> list[dict]
         clarify information related to the retrieved context or prior conversation.
 
         Do not present general knowledge as company-specific information.
+
+        Format your answer in valid markdown. Put each heading on its own line with a blank line before and after it. Do not auto generate titles at the beginning of your response.
         """
 
         user_prompt = f"""
@@ -49,6 +51,8 @@ def build_messages(question: str, context: str, history: str = "") -> list[dict]
         clarify information related to the retrieved context.
 
         Do not present general knowledge as company-specific information.
+
+        Format your answer in valid markdown. Put each heading on its own line with a blank line before and after it. Do not auto generate titles at the beginning of your response.
         """
 
         user_prompt = f"""
@@ -78,6 +82,8 @@ def build_messages(question: str, context: str, history: str = "") -> list[dict]
         clarify information related to the prior conversation and the organization's domain.
 
         Do not present general knowledge as company-specific information.
+
+        Format your answer in valid markdown. Put each heading on its own line with a blank line before and after it. Do not auto generate titles at the beginning of your response.
         """
 
         user_prompt = f"""
@@ -119,6 +125,8 @@ def build_messages(question: str, context: str, history: str = "") -> list[dict]
         politely refuse and redirect the conversation back to supported topics.
 
         Keep responses concise and professional.
+
+        Format your answer in valid markdown. Put each heading on its own line with a blank line before and after it. Do not auto generate titles at the beginning of your response.
         """
 
         user_prompt = f"""
