@@ -130,11 +130,25 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
         context_chunks.append(text)
         size += len(text)
 
-    context = "\n\n".join(context_chunks)
+        context = "\n\n".join(context_chunks)
+
+    history_result = (
+        supabase.table("messages")
+        .select("role, content")
+        .eq("chat_id", chat_id)
+        .order("created_at", desc=False)
+        .execute()
+    )
+
+    history_text = "\n".join(
+        f"{msg['role']}: {msg['content']}"
+        for msg in (history_result.data or [])
+    )
 
     messages = prompting_util.build_messages(
         question=question,
         context=context,
+        history=history_text,
     )
 
     answer = await llm_util.generate_answer(messages)
