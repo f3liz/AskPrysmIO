@@ -110,7 +110,6 @@ def refresh_logic(request: Request, response: Response):
         )
 
 def process_login(body: LoginRequest, response: Response):
-    # 1. Query the database for the user
     db_response = supabase.table("users").select("*").eq("username", body.username).execute()
     
     if not db_response.data:
@@ -121,14 +120,12 @@ def process_login(body: LoginRequest, response: Response):
         
     db_user = db_response.data[0]
 
-    # 2. Verify the password against the stored passlib bcrypt hash
     if not verify_password(body.password, db_user["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
         )
 
-    # 3. Generate tokens using the database user ID and username
     access_token = create_access_token(
         data={"sub": db_user["username"], "user_id": db_user["id"], "is_admin": db_user["is_admin"]}
     )
@@ -136,7 +133,6 @@ def process_login(body: LoginRequest, response: Response):
         data={"sub": db_user["username"], "user_id": db_user["id"], "is_admin": db_user["is_admin"]}
     )
 
-    # 4. Set cookies
     response.set_cookie(
         key="access_token",
         value=access_token,
