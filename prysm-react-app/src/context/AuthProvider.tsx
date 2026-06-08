@@ -1,42 +1,55 @@
-import { useState, type ReactNode, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from "./AuthContext";
+import { useState, useEffect, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext, type User } from "./AuthContext";
 import { api, setupInterceptors } from "../api/api";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  const loginUser = () => setIsAuthenticated(true);
-  const logoutUser = () => setIsAuthenticated(false);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-    
+
+  const checkAuth = async () => {
+    try {
+      const response = await api.get("/auth/me");
+      setUser(response.data);
+    } catch (err) {
+      setUser(null);
+      console.log(err);
+      navigate("/login", { replace: true });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const cleanup = setupInterceptors(navigate, setIsAuthenticated);
+    const cleanup = setupInterceptors(navigate, () => setUser(null));
     return cleanup;
-  }, [navigate])
+  }, [navigate]);
 
-  useEffect(()=> {
-    const checkAuth = async () => {
-      try{
-        await api.get('/check/');
-        setIsAuthenticated(true);
-      } catch (err) {
-        setIsAuthenticated(false);
-        console.log(err)
-        navigate('/login', {replace: true});
-      }  finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     checkAuth();
   }, []);
 
-if (loading) return <div>Loading...</div>
+  const loginUser = async () => {
+    setIsLoading(true);
+    await checkAuth();
+  };
+
+  const logoutUser = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUser(null);
+      navigate("/login", { replace: true });
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loginUser, logoutUser}}>
+    <AuthContext.Provider value={{ user, isLoading, loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

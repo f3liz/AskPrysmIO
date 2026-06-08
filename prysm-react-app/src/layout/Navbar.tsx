@@ -1,6 +1,9 @@
 import { NavLink, Link } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 function Navbar() {
+  const { user } = useAuth();
+
   return (
     <header className="navbar">
       <Link to="/" className="brand-link">
@@ -12,19 +15,25 @@ function Navbar() {
       </Link>
 
       <div className="btn-container">
-        <NavLink 
-          to="/faq" 
-          className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+        <NavLink
+          to="/faq"
+          className={({ isActive }) =>
+            isActive ? "nav-item active" : "nav-item"
+          }
         >
           <button className="navButton">Go to FAQ</button>
         </NavLink>
-        
-        <NavLink 
-          to="/admin" 
-          className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
-        >
-          <button className="navButton">File Upload</button>
-        </NavLink>
+
+        {user?.is_admin && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+          >
+            <button className="navButton">Admin</button>
+          </NavLink>
+        )}
       </div>
     </header>
   );

@@ -1,5 +1,6 @@
 from openai import AsyncOpenAI
 from backend.config import settings
+from backend.utils import prompting_util, llm_util
 
 client = AsyncOpenAI(
     api_key=settings.OPENROUTER_API_KEY,
@@ -18,3 +19,8 @@ async def generate_answer(messages: list[dict]) -> str:
     )
 
     return response.choices[0].message.content
+
+async def generate_title(question: str) -> str:
+    prompt = prompting_util.build_title_messages(question=question)
+    title = await llm_util.generate_answer(prompt)
+    return title.strip().strip('"')[:60]

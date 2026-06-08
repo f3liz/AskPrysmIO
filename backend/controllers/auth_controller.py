@@ -4,8 +4,11 @@ from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status, Request, Response
 from jose import JWTError, jwt
 from pydantic import BaseModel
-
 from backend.config import settings
+from passlib.context import CryptContext
+from backend.db import supabase 
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ADMIN_USER = settings.ADMIN_USER
 ADMIN_PASSWORD_PLAIN = settings.ADMIN_PASSWORD
@@ -42,6 +45,7 @@ def require_auth(request: Request):
 
         username = payload.get("sub")
         user_id = payload.get("user_id")
+        is_admin = payload.get("is_admin", False)
 
         if not username or user_id is None:
             raise HTTPException(
@@ -51,7 +55,8 @@ def require_auth(request: Request):
 
         return {
             "id": user_id,
-            "username": username
+            "username": username,
+            "is_admin": is_admin
         }
 
     except JWTError:
@@ -60,14 +65,8 @@ def require_auth(request: Request):
             detail="Invalid or expired token"
         )
 
-def verify_password(plain_password: str, hashed_password: bytes):
-
-    pre_hashed_attempt = hashlib.sha256(plain_password.encode('utf-8')).hexdigest().encode('utf-8')
-    
-    if isinstance(hashed_password, str):
-        hashed_password = hashed_password.encode('utf-8')
-        
-    return bcrypt.checkpw(pre_hashed_attempt, hashed_password)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
 
 def create_token(data: dict, expires_delta: timedelta, token_type: str):
     to_encode = data.copy()
@@ -111,17 +110,27 @@ def refresh_logic(request: Request, response: Response):
         )
 
 def process_login(body: LoginRequest, response: Response):
-    if body.username != ADMIN_USER or not verify_password(body.password, ADMIN_PASSWORD_HASH):
+    db_response = supabase.table("users").select("*").eq("username", body.username).execute()
+    
+    if not db_response.data:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+        )
+        
+    db_user = db_response.data[0]
+
+    if not verify_password(body.password, db_user["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
         )
 
     access_token = create_access_token(
-        data={"sub": body.username, "user_id": 1} # temp fixed admin ID 
+        data={"sub": db_user["username"], "user_id": db_user["id"], "is_admin": db_user["is_admin"]}
     )
     refresh_token = create_refresh_token(
-        data={"sub": body.username, "user_id": 1}
+        data={"sub": db_user["username"], "user_id": db_user["id"], "is_admin": db_user["is_admin"]}
     )
 
     response.set_cookie(
@@ -143,6 +152,7 @@ def process_login(body: LoginRequest, response: Response):
         path="/auth/refresh",
         max_age=7 * 24 * 60 * 60,
     )
+    
     return {"message": "Login successful"}
 
 def process_logout(response: Response):

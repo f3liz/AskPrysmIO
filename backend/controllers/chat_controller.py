@@ -41,7 +41,7 @@ async def get_chat_thread(chat_id: str, user_id: str) -> dict:
 
     messages_result = (
         supabase.table("messages")
-        .select("role, content, created_at")
+        .select("id, role, content, created_at")
         .eq("chat_id", chat_id)
         .order("created_at", desc=False)
         .execute()
@@ -57,10 +57,15 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
     if chat_id is None:
         chat_id = str(uuid4())
 
+        try: 
+            title = await llm_util.generate_title(question)
+        except Exception:
+            title = question[:60]
+
         new_chat = {
             "id": chat_id,
             "user_id": user_id,
-            "title": question[:60],
+            "title": title,
             "created_at": utc_now(),
             "updated_at": utc_now(),
         }
@@ -125,11 +130,25 @@ async def generate_response(question: str, chat_id: str | None, user_id: str) ->
         context_chunks.append(text)
         size += len(text)
 
-    context = "\n\n".join(context_chunks)
+        context = "\n\n".join(context_chunks)
+
+    history_result = (
+        supabase.table("messages")
+        .select("role, content")
+        .eq("chat_id", chat_id)
+        .order("created_at", desc=False)
+        .execute()
+    )
+
+    history_text = "\n".join(
+        f"{msg['role']}: {msg['content']}"
+        for msg in (history_result.data or [])
+    )
 
     messages = prompting_util.build_messages(
         question=question,
         context=context,
+        history=history_text,
     )
 
     answer = await llm_util.generate_answer(messages)

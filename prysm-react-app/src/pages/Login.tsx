@@ -11,7 +11,7 @@ const Login = () => {
   const [error, setError] = useState({
     username: "",
     password: "",
-    server: ""
+    server: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -24,9 +24,9 @@ const Login = () => {
     const newError = {
       username: "",
       password: "",
-      server: ""
+      server: "",
     };
-    
+
     let valid = true;
 
     if (!username.trim()) {
@@ -41,12 +41,12 @@ const Login = () => {
 
     setError(newError);
     return valid;
-  }
+  };
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setError((prev) => ({...prev, server: ""}));
+    setError((prev) => ({ ...prev, server: "" }));
 
     if (!validate()) return;
 
@@ -54,12 +54,12 @@ const Login = () => {
       setIsSubmitting(true);
 
       await submitLogin({ username, password });
-      loginUser();
+      await loginUser();
       navigate("/");
     } catch (err) {
       setError((prev) => ({
         ...prev,
-        server: "Invalid username or password"
+        server: "Invalid username or password",
       }));
       console.error("Login failed.", err);
     } finally {
@@ -76,7 +76,7 @@ const Login = () => {
         </div>
 
         <form className="loginForm" onSubmit={handleSubmit}>
-          {error.server && (<div className="errorMessage">{error.server}</div>)}
+          {error.server && <div className="errorMessage">{error.server}</div>}
 
           <div className="inputGroup">
             <label htmlFor="username">Username</label>
@@ -87,7 +87,7 @@ const Login = () => {
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
-                setError((prev) => ({...prev, username: "", server: ""}));
+                setError((prev) => ({ ...prev, username: "", server: "" }));
               }}
             />
             {error.username && (
@@ -106,19 +106,28 @@ const Login = () => {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  setError((prev) => ({...prev, password: "", server: ""}));
+                  setError((prev) => ({ ...prev, password: "", server: "" }));
                 }}
               />
 
-              <button type = "button" className="togglePassword" onClick={() => setShowPassword((prev) => !prev)}
-              >{showPassword ? "Hide" : "Show"}</button>
+              <button
+                type="button"
+                className="togglePassword"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
             </div>
             {error.password && (
               <span className="fieldError">{error.password}</span>
             )}
           </div>
 
-          <button type="submit" className="submitButton" disabled={isSubmitting}>
+          <button
+            type="submit"
+            className="submitButton"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Logging in..." : "Log in"}
           </button>
         </form>
