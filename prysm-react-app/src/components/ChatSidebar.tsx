@@ -1,9 +1,8 @@
-import { getHistory } from "../api/chatHistory";
+import { retrieveMessages } from "../api/chatHistory";
 import { ChatHistoryItem } from "./ChatHistoryItem";
 import { useState, useEffect } from "react";
 import { useChat } from "../context/useChat";
 import type { Chat } from "../types";
-import { chatData } from "../data/chats";
 
 
 export function ChatSidebar(){
@@ -15,16 +14,19 @@ export function ChatSidebar(){
 
 
     useEffect(() => {
+        let active = true;
         async function retrieveHistory() {
             try {
-                setChats(chatData);
+                const response = await retrieveMessages()
+                if (active) setChats(response);
             } catch (err) {
-                setError("Failed to load chat history.");
+                if (active) setError("Failed to load chat history.");
             } finally {
-                setLoading(false);
+                if (active) setLoading(false);
             }
         }
         retrieveHistory();
+        return () => {active = false;}
     }, []);
 
     return (
@@ -39,11 +41,19 @@ export function ChatSidebar(){
             )}
 
             {!loading && !error && (
-                chats.length === 0
-                    ? <p className="sidebar-status">No chat history</p>
-                    : chats.map((chat: Chat) => (
-                        <ChatHistoryItem chat={chat} key={chat.id} isActive={chat.id === activeChat} />
-                    ))
+                chats.length === 0 ? (
+                    <p className="sidebar-status">No chat history</p>
+                ) : (
+                    <div className="sidebar-items">
+                        {chats.map((chat: Chat) => (
+                            <ChatHistoryItem
+                                chat={chat}
+                                key={chat.id}
+                                isActive={chat.id === activeChat}
+                            />
+                        ))}
+                    </div>
+                )
             )}
         </div>
     )

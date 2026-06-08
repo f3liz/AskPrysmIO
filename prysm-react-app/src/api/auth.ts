@@ -18,3 +18,12 @@ export async function refreshAccessToken(): Promise<boolean> {
     return false;
   }
 }
+
+export async function getCurrentUser() {
+  try {
+    const response = await api.get("/auth/me");
+    return response.data;
+  } catch {
+    return null;
+  }
+}

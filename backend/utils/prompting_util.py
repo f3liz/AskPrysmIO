@@ -136,3 +136,15 @@ def build_messages(question: str, context: str, history: str = "") -> list[dict]
             "content": user_prompt.strip()
         }
     ]
+
+def build_title_messages(question: str) -> list[dict]:
+    return [
+        {
+            "role": "system",
+            "content": "Summarize the user's question as a 3-4 word title. Return only the title, no quotes or punctuation.",
+        },
+        {
+            "role": "user",
+            "content": question,
+        },
+    ]
